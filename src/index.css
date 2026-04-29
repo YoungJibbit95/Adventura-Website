@@ -443,13 +443,136 @@ html {
 .doc-panel,
 .info-card,
 .command-card,
-.wiki-card {
+.wiki-card,
+.docs-console {
   background:
     linear-gradient(145deg, rgba(15, 23, 42, 0.74), rgba(5, 11, 18, 0.92)),
     radial-gradient(circle at top left, rgba(16,185,129,0.08), transparent 34%),
     radial-gradient(circle at bottom right, rgba(251,191,36,0.07), transparent 36%);
   border: 1px solid rgba(255,255,255,0.1);
   box-shadow: 0 24px 80px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.11);
+}
+
+.docs-console {
+  position: relative;
+  overflow: hidden;
+}
+
+.docs-console::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #10b981, #38bdf8, #fbbf24);
+  opacity: 0.76;
+}
+
+.search-shell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid rgba(52,211,153,0.22);
+  background:
+    linear-gradient(145deg, rgba(2,6,8,0.72), rgba(15,23,42,0.62)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 18px);
+}
+
+.search-shell input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #f8fafc;
+  font: 600 1rem/1.5 var(--font-sans);
+  padding: 0.75rem 0.25rem;
+}
+
+.search-shell input::placeholder {
+  color: #64748b;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 36px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.045);
+  color: #cbd5e1;
+  font-family: var(--font-pixel);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  padding: 0.42rem 0.62rem;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.filter-chip:hover,
+.filter-chip-active {
+  color: #ecfdf5;
+  border-color: rgba(52,211,153,0.42);
+  background: rgba(16,185,129,0.14);
+  transform: translateY(-1px);
+}
+
+.result-card {
+  display: block;
+  text-decoration: none;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 18px);
+  border: 1px solid rgba(255,255,255,0.09);
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.result-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56,189,248,0.35);
+  background:
+    linear-gradient(145deg, rgba(14,165,233,0.1), rgba(255,255,255,0.03)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 18px);
+}
+
+.result-category {
+  display: inline-flex;
+  border-radius: 8px;
+  border: 1px solid rgba(52,211,153,0.24);
+  background: rgba(16,185,129,0.1);
+  color: #a7f3d0;
+  font-family: var(--font-pixel);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  padding: 0.25rem 0.45rem;
+}
+
+.command-snippet {
+  position: relative;
+}
+
+.copy-command-button {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(52,211,153,0.24);
+  background: rgba(3, 7, 10, 0.86);
+  color: #a7f3d0;
+  font-family: var(--font-pixel);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  padding: 0.35rem 0.5rem;
+}
+
+.copy-command-button:hover {
+  border-color: rgba(52,211,153,0.48);
+  background: rgba(16,185,129,0.16);
 }
 
 .info-card,

@@ -33,10 +33,15 @@ import {
   Layers3,
   Flame,
   BookOpen,
+  Search,
+  ListFilter,
+  Clipboard,
+  CheckCircle2,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const navItems = [
+  { label: 'Suchen', href: '#docs-konsole' },
   { label: 'Spielprinzip', href: '#spielprinzip' },
   { label: 'Code-Infos', href: '#code-infos' },
   { label: 'Architektur', href: '#architektur' },
@@ -60,6 +65,17 @@ const currentMetrics = [
   { value: '5', label: 'Module', detail: 'common, client, server, launcher und tools' },
 ];
 
+const docsIndex = [
+  { title: 'Core Loop', category: 'Gameplay', href: '#spielprinzip', text: 'Explore Gather Craft Survive mit Health Hunger Stamina Breath und blockbasiertem Progress.' },
+  { title: 'Block Registry', category: 'Content', href: '#code-infos', text: '42 Block IDs: Terrain, Harvest, Decor, Light, Ores und Campfire States.' },
+  { title: 'Items & Food', category: 'Content', href: wikiHref('content.html'), text: '69 Item Types, Food-Werte, Tools, Stackgrößen, Materialien und Basebuilding-Items.' },
+  { title: 'Crafting Recipes', category: 'Content', href: wikiHref('content.html'), text: '31 Rezepte in Basic, Tools, Food, Decor und Building inklusive Campfire Station.' },
+  { title: 'Server Authority', category: 'Technik', href: '#architektur', text: '20 TPS Server validiert Block Actions, Interact, Craft Requests, Inventory und World Edits.' },
+  { title: 'Packet Flow', category: 'Technik', href: wikiHref('code-map.html'), text: 'Handshake, Login, ChunkData, BlockUpdate, EntitySnapshots, InventorySnapshot und Chat.' },
+  { title: 'Local Start', category: 'Start', href: '#installation', text: './gradlew buildGame, runLauncher, runSingleplayer, runServer und joinLocal.' },
+  { title: 'Controls & Commands', category: 'Start', href: wikiHref('controls.html'), text: 'WASD, E, O, F1, F3, F4, Chat, Slash Commands und Settings Toggles.' },
+];
+
 const VoxelBlock = ({ color = 'bg-emerald-500', className = '' }) => (
   <div className={`mc-cube-wrapper inline-block ${className}`}>
     <div className="mc-cube">
@@ -72,16 +88,32 @@ const VoxelBlock = ({ color = 'bg-emerald-500', className = '' }) => (
 
 function Navigation() {
   const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState('#top');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      setScrolled(window.scrollY > 50);
+      setScrollProgress(Math.min(100, Math.max(0, (window.scrollY / maxScroll) * 100)));
+
+      const visible = navItems
+        .map((item) => ({ href: item.href, element: document.querySelector(item.href) }))
+        .filter((item): item is { href: string; element: Element } => Boolean(item.element))
+        .reverse()
+        .find((item) => item.element.getBoundingClientRect().top <= 160);
+
+      setActiveSection(visible?.href ?? '#top');
+    };
     window.addEventListener('scroll', handleScroll);
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-voxel-bg/90 backdrop-blur-xl border-b border-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.5)]' : 'bg-transparent py-4'}`}>
+      <div className="absolute left-0 top-0 h-0.5 bg-gradient-to-r from-emerald-400 via-sky-300 to-amber-300 transition-[width] duration-150" style={{ width: `${scrollProgress}%` }}></div>
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <a href="#top" className="flex items-center gap-4 relative group">
           <div className="absolute -inset-2 bg-emerald-500/15 rounded-lg blur-xl group-hover:bg-emerald-500/25 transition-all duration-500"></div>
@@ -95,9 +127,9 @@ function Navigation() {
 
         <div className="hidden md:flex items-center gap-8 text-sm font-pixel text-slate-400 uppercase">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href} className="hover:text-emerald-400 transition-colors relative group">
+            <a key={item.href} href={item.href} className={`hover:text-emerald-400 transition-colors relative group ${activeSection === item.href ? 'text-emerald-300' : ''}`}>
               {item.label}
-              <span className="absolute -bottom-2 left-0 w-0 h-px bg-emerald-400 group-hover:w-full transition-all duration-300"></span>
+              <span className={`absolute -bottom-2 left-0 h-px bg-emerald-400 transition-all duration-300 ${activeSection === item.href ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </a>
           ))}
         </div>
@@ -270,6 +302,90 @@ function Hero() {
         >
           <HeroPanel />
         </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function DocsConsoleSection() {
+  const categories = ['Alle', 'Gameplay', 'Content', 'Technik', 'Start'];
+  const [query, setQuery] = useState('');
+  const [category, setCategory] = useState('Alle');
+
+  const normalizedQuery = query.trim().toLowerCase();
+  const results = docsIndex.filter((entry) => {
+    const matchesCategory = category === 'Alle' || entry.category === category;
+    const haystack = `${entry.title} ${entry.category} ${entry.text}`.toLowerCase();
+    return matchesCategory && (!normalizedQuery || haystack.includes(normalizedQuery));
+  });
+
+  return (
+    <section id="docs-konsole" className="py-24 relative bg-voxel-bg border-y border-white/5 overflow-hidden">
+      <div className="absolute inset-0 arcade-grid opacity-50"></div>
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="docs-console rounded-lg p-5 md:p-7">
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-6 items-start">
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-sky-300/25 bg-sky-300/10 text-sm font-pixel text-sky-200 uppercase mb-6">
+                <Search className="w-4 h-4" /> Docs-Konsole
+              </div>
+              <h2 className="font-pixel text-3xl md:text-4xl uppercase text-white leading-tight mb-5">
+                Schnell finden, was gerade wichtig ist
+              </h2>
+              <p className="text-slate-300 text-lg leading-relaxed mb-6">
+                Suche direkt nach Game-Systemen, Content, Commands oder Technik. Die Treffer springen in die passende Sektion oder in die richtige Wiki-Seite.
+              </p>
+
+              <div className="search-shell rounded-lg p-2">
+                <Search className="w-5 h-5 text-emerald-300" />
+                <input
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="z.B. campfire, blocks, server, controls..."
+                  aria-label="Website und Wiki durchsuchen"
+                />
+              </div>
+
+              <div className="flex flex-wrap gap-2 mt-4" aria-label="Dokumentationsfilter">
+                {categories.map((item) => (
+                  <button
+                    key={item}
+                    type="button"
+                    onClick={() => setCategory(item)}
+                    className={`filter-chip ${category === item ? 'filter-chip-active' : ''}`}
+                  >
+                    <ListFilter className="w-3.5 h-3.5" /> {item}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between gap-4 mb-4">
+                <span className="font-pixel text-sm uppercase text-slate-400">{results.length} Treffer</span>
+                <a href={wikiIndexHref} className="font-pixel text-sm uppercase text-emerald-300 inline-flex items-center gap-2 hover:text-white transition-colors">
+                  Wiki öffnen <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-3">
+                {results.map((entry) => (
+                  <a key={`${entry.category}-${entry.title}`} href={entry.href} className="result-card rounded-lg p-4">
+                    <span className="result-category">{entry.category}</span>
+                    <h3 className="font-pixel text-lg uppercase text-white mt-3 mb-3">{entry.title}</h3>
+                    <p className="text-slate-300 leading-relaxed">{entry.text}</p>
+                  </a>
+                ))}
+                {results.length === 0 && (
+                  <div className="result-card rounded-lg p-5 sm:col-span-2">
+                    <h3 className="font-pixel text-lg uppercase text-white mb-3">Keine Treffer</h3>
+                    <p className="text-slate-300">Versuch einen allgemeineren Begriff wie `craft`, `block`, `server` oder `start`.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -632,6 +748,27 @@ function ArchitectureSection() {
   );
 }
 
+function CopyCommandButton({ command }) {
+  const [copied, setCopied] = useState(false);
+
+  const copyCommand = async () => {
+    try {
+      await navigator.clipboard.writeText(command);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  return (
+    <button type="button" onClick={copyCommand} className="copy-command-button" aria-label="Befehl kopieren">
+      {copied ? <CheckCircle2 className="w-4 h-4" /> : <Clipboard className="w-4 h-4" />}
+      <span>{copied ? 'Kopiert' : 'Copy'}</span>
+    </button>
+  );
+}
+
 function InstallationSection() {
   const commandCards = [
     {
@@ -687,7 +824,10 @@ function InstallationSection() {
                     <p className="text-slate-300 mt-2 leading-relaxed">{card.desc}</p>
                   </div>
                 </div>
-                <code className="code-chip block rounded-lg px-4 py-3 text-sm text-emerald-200 whitespace-pre-wrap overflow-x-auto">{card.command}</code>
+                <div className="command-snippet">
+                  <code className="code-chip block rounded-lg px-4 py-3 pr-24 text-sm text-emerald-200 whitespace-pre-wrap overflow-x-auto">{card.command}</code>
+                  <CopyCommandButton command={card.command} />
+                </div>
               </div>
             ))}
           </div>
@@ -806,6 +946,7 @@ function App() {
     <div className="min-h-screen bg-voxel-bg text-slate-200 selection:bg-emerald-500/30 overflow-x-hidden">
       <Navigation />
       <Hero />
+      <DocsConsoleSection />
       <GameplaySection />
       <CodeSnapshotSection />
       <ArchitectureSection />

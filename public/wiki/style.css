@@ -58,11 +58,11 @@ a {
 
 .wiki-nav-inner {
   width: min(1180px, calc(100% - 32px));
-  height: 78px;
+  min-height: 78px;
   margin: 0 auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(220px, 280px);
   align-items: center;
-  justify-content: space-between;
   gap: 24px;
 }
 
@@ -99,6 +99,83 @@ a {
 
 .nav-links a:hover {
   color: var(--green);
+}
+
+.wiki-search {
+  position: relative;
+  min-width: 0;
+}
+
+.wiki-search input {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid rgba(52,211,153,0.22);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(2,6,8,0.78), rgba(15,23,42,0.62)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 18px);
+  color: var(--text);
+  font: 700 0.9rem/1.45 var(--font-sans);
+  outline: 0;
+  padding: 8px 12px;
+}
+
+.wiki-search input::placeholder {
+  color: #64748b;
+}
+
+.wiki-search input:focus {
+  border-color: rgba(52,211,153,0.52);
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.13);
+}
+
+.wiki-search-results {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: min(430px, calc(100vw - 32px));
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(3, 5, 8, 0.98);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.48);
+}
+
+.wiki-search-results[hidden] {
+  display: none;
+}
+
+.wiki-search-results a,
+.wiki-search-empty {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.045);
+  padding: 10px 12px;
+  text-decoration: none;
+}
+
+.wiki-search-results a:hover {
+  border-color: rgba(52,211,153,0.34);
+  background: rgba(16,185,129,0.1);
+}
+
+.wiki-search-results strong {
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+.wiki-search-results span,
+.wiki-search-empty {
+  color: #cbd5e1;
+  font-size: 0.88rem;
+  line-height: 1.45;
 }
 
 .hero {
@@ -452,10 +529,21 @@ pre {
     height: auto;
     padding: 18px 0;
     align-items: flex-start;
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .nav-links {
+    justify-content: flex-start;
     flex-wrap: wrap;
+  }
+
+  .wiki-search {
+    width: 100%;
+  }
+
+  .wiki-search-results {
+    left: 0;
+    right: auto;
+    width: 100%;
   }
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Adventura Wiki - Systeme</title>
     <link rel="stylesheet" href="./style.css" />
+    <script src="./wiki.js" defer></script>
   </head>
   <body>
     <nav class="wiki-nav">
@@ -18,6 +19,10 @@
           <a href="./architecture.html">Architektur</a>
           <a href="./installation.html">Installation</a>
           <a href="./controls.html">Controls</a>
+        </div>
+        <div class="wiki-search" role="search">
+          <input data-wiki-search type="search" placeholder="Wiki suchen..." aria-label="Wiki durchsuchen" />
+          <div class="wiki-search-results" data-wiki-results hidden></div>
         </div>
       </div>
     </nav>
