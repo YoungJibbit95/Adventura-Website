@@ -13,6 +13,9 @@
         <div class="nav-links">
           <a href="./index.html">Wiki Start</a>
           <a href="./gameplay.html">Spielprinzip</a>
+          <a href="./content.html">Content</a>
+          <a href="./systems.html">Systeme</a>
+          <a href="./code-map.html">Code Map</a>
           <a href="./installation.html">Installation</a>
           <a href="./controls.html">Controls</a>
         </div>
@@ -65,6 +68,16 @@
           <h3>Rendering</h3>
           <p>LWJGL/OpenGL, Visible-face Meshing, Opaque/Transparent Meshes, Culling, Fog, AO, Soft Shading und animiertes Wasser.</p>
         </article>
+      </section>
+
+      <section class="section">
+        <h2>Intent Flow</h2>
+        <ol class="flow-list">
+          <li><strong>Client Input:</strong> Movement, Block Break/Place, Block Interact, Craft Request und Chat werden als Intents verschickt.</li>
+          <li><strong>Server Validation:</strong> Reichweite, Slot, Cooldowns, Inventar, Blockziel und Station-Nähe werden autoritativ geprüft.</li>
+          <li><strong>World Mutation:</strong> Akzeptierte Änderungen erzeugen Block Updates, Inventory Snapshots, Entity Snapshots oder Chat Broadcasts.</li>
+          <li><strong>Client Render:</strong> Chunks, Lichtwerte, Sprites, HUD und Meshes werden lokal aktualisiert und gerendert.</li>
+        </ol>
       </section>
     </main>
 

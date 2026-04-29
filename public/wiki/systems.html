@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adventura Wiki - Systeme</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <nav class="wiki-nav">
+      <div class="wiki-nav-inner">
+        <a class="brand" href="../">ADVENT<span>URA</span></a>
+        <div class="nav-links">
+          <a href="./index.html">Wiki Start</a>
+          <a href="./gameplay.html">Spielprinzip</a>
+          <a href="./content.html">Content</a>
+          <a href="./code-map.html">Code Map</a>
+          <a href="./architecture.html">Architektur</a>
+          <a href="./installation.html">Installation</a>
+          <a href="./controls.html">Controls</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="wiki-shell">
+      <section class="hero">
+        <span class="eyebrow">Game-Systeme</span>
+        <h1>Survival, Crafting <span>& World Rules</span></h1>
+        <p class="lead">
+          Die wichtigsten Gameplay-Systeme sind bereits miteinander verbunden:
+          Charakterwerte, Inventar, Hotbar, Crafting, Block-Interaktionen,
+          Campfires, Server-Validation und Render-Settings.
+        </p>
+      </section>
+
+      <section class="section grid two">
+        <article class="card">
+          <h2>Survival Status</h2>
+          <ul class="clean-list">
+            <li><strong>Health:</strong> Schaden, Regeneration und Fall Damage hängen am Charakterstatus.</li>
+            <li><strong>Hunger:</strong> Food Items füllen Hunger und können Regeneration geben.</li>
+            <li><strong>Stamina:</strong> Sprinting und Bewegung werden über Ausdauer lesbarer.</li>
+            <li><strong>Breath:</strong> Unterwasser-Zeit und Schwimmphysik sind im Preview-Loop.</li>
+            <li><strong>Modes:</strong> Survival, Creative und Spectator haben unterschiedliche Bewegung.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>Inventory & Crafting</h2>
+          <ul class="clean-list">
+            <li><strong>Stacks:</strong> Items haben Stackgrößen, Food-Werte und Tool-Durability.</li>
+            <li><strong>Hotbar:</strong> 1-9, Mouse Wheel, Item-Sprites und Placement Consumption.</li>
+            <li><strong>Categories:</strong> Basic, Tools, Food, Decor und Building.</li>
+            <li><strong>Stations:</strong> Campfire-Rezepte brauchen Nähe zur Station und haben Crafting-Zeit.</li>
+            <li><strong>Online:</strong> Der Server sendet vollständige Inventory Snapshots zurück.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="section">
+        <h2>Campfire Flow</h2>
+        <ol class="flow-list">
+          <li><strong>Craft:</strong> Spieler baut ein Campfire aus Stone und Twigs.</li>
+          <li><strong>Place:</strong> Das Campfire wird als Block in der Welt platziert.</li>
+          <li><strong>Fuel:</strong> Brennstoff aktiviert den Block und verlängert die aktive Zeit.</li>
+          <li><strong>Craft Near Station:</strong> Food, Charcoal, Clay Bowl, Clay Pot und Copper Ingot nutzen die aktive Station.</li>
+          <li><strong>Burn Out:</strong> Der Server tickt aktive Campfires und setzt sie nach Ablauf auf burned_out.</li>
+        </ol>
+      </section>
+
+      <section class="section grid three">
+        <article class="card">
+          <h3>Block-Interaktion</h3>
+          <p class="muted">
+            Rechtsklick platziert Blöcke oder interagiert mit harvestable Blocks wie
+            Berry Bush und Herb Planter. Block-Drops kommen aus der Block-Registry.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Rendering</h3>
+          <p class="muted">
+            Chunk Meshing, transparente Wasserflächen, Fog, Vertex AO, Soft Directional
+            Shading, animiertes Wasser, Sprite-HUD und einfache Entity Animationen.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Feedback Hooks</h3>
+          <p class="muted">
+            Audio-Hooks existieren für Inventory Clicks, Block Break/Place, Crafting,
+            Eating, Footsteps, Campfires und Ambience.
+          </p>
+        </article>
+      </section>
+
+      <section class="section">
+        <div class="callout">
+          <h2>Server-Authority</h2>
+          <p>
+            Im Online-Spiel sendet der Client Intents. Der Server validiert Hotbar-Slot,
+            Reichweite, Cooldowns, Inventar, Crafting und Weltänderungen, bevor Chunks,
+            Block Updates, Entity Snapshots oder Inventory Snapshots an Clients gehen.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="wiki-shell pixel">Adventura Wiki / Systeme</div></footer>
+  </body>
+</html>

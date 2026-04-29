@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adventura Wiki - Code Map</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <nav class="wiki-nav">
+      <div class="wiki-nav-inner">
+        <a class="brand" href="../">ADVENT<span>URA</span></a>
+        <div class="nav-links">
+          <a href="./index.html">Wiki Start</a>
+          <a href="./gameplay.html">Spielprinzip</a>
+          <a href="./content.html">Content</a>
+          <a href="./systems.html">Systeme</a>
+          <a href="./architecture.html">Architektur</a>
+          <a href="./installation.html">Installation</a>
+          <a href="./controls.html">Controls</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="wiki-shell">
+      <section class="hero">
+        <span class="eyebrow">Code Map</span>
+        <h1>Wo die Systeme <span>im Code liegen</span></h1>
+        <p class="lead">
+          Adventura ist in Gradle-Module getrennt. Diese Seite zeigt, welche Dateien
+          für Content, Runtime, Netzwerk, Server-Logik und Client-UX aktuell am
+          wichtigsten sind.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Module</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Modul</th>
+                <th>Aufgabe</th>
+                <th>Typische Inhalte</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>common</code></td>
+                <td>Geteiltes Spielmodell</td>
+                <td>Registries, Blocks, Items, Crafting, World Data, Packets, Lighting, Entities.</td>
+              </tr>
+              <tr>
+                <td><code>server</code></td>
+                <td>Autoritative Simulation</td>
+                <td>Netty Transport, Auth Hook, Tick Loop, World Streaming, Inventory Validation.</td>
+              </tr>
+              <tr>
+                <td><code>client</code></td>
+                <td>Rendering und UX</td>
+                <td>LWJGL Window, Camera, HUD, Inventory, Chat, Settings, Chunk Meshes, Sprites.</td>
+              </tr>
+              <tr>
+                <td><code>launcher</code></td>
+                <td>Startoberfläche</td>
+                <td>Swing Launcher für Singleplayer, lokalen Server und Multiplayer Join.</td>
+              </tr>
+              <tr>
+                <td><code>tools</code></td>
+                <td>Utility-Einstieg</td>
+                <td>Asset- und Daten-Tasks für spätere Pipelines.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Wichtige Dateien</h2>
+        <div class="grid two">
+          <article class="card">
+            <h3>Content Registries</h3>
+            <a class="file-link" href="https://github.com/YoungJibbit95/AdventureCraft/blob/main/common/src/main/java/dev/voxelgame/common/block/Blocks.java">common/.../block/Blocks.java</a>
+            <a class="file-link" href="https://github.com/YoungJibbit95/AdventureCraft/blob/main/common/src/main/java/dev/voxelgame/common/item/Items.java">common/.../item/Items.java</a>
+            <a class="file-link" href="https://github.com/YoungJibbit95/AdventureCraft/blob/main/common/src/main/java/dev/voxelgame/common/item/CraftingRecipes.java">common/.../item/CraftingRecipes.java</a>
+            <a class="file-link" href="https://github.com/YoungJibbit95/AdventureCraft/blob/main/common/src/main/java/dev/voxelgame/common/world/Biomes.java">common/.../world/Biomes.java</a>
+          </article>
+          <article class="card">
+            <h3>Runtime & Netzwerk</h3>
+            <a class="file-link" href="https://github.com/YoungJibbit95/AdventureCraft/blob/main/server/src/main/java/dev/voxelgame/server/world/ServerWorld.java">server/.../world/ServerWorld.java</a>
+            <a class="file-link" href="https://github.com/YoungJibbit95/AdventureCraft/blob/main/common/src/main/java/dev/voxelgame/common/net/PacketCodec.java">common/.../net/PacketCodec.java</a>
+            <a class="file-link" href="https://github.com/YoungJibbit95/AdventureCraft/blob/main/client/src/main/java/dev/voxelgame/client/GameClient.java">client/.../GameClient.java</a>
+            <a class="file-link" href="https://github.com/YoungJibbit95/AdventureCraft/blob/main/build.gradle.kts">build.gradle.kts</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Packet-Liste</h2>
+        <p>
+          <span class="tag">Handshake</span>
+          <span class="tag">LoginRequest</span>
+          <span class="tag">LoginAccepted</span>
+          <span class="tag">ChunkData</span>
+          <span class="tag">BlockUpdate</span>
+          <span class="tag">BlockAction</span>
+          <span class="tag">PlayerMove</span>
+          <span class="tag">BlockInteract</span>
+          <span class="tag">EntitySnapshots</span>
+          <span class="tag">InventorySnapshot</span>
+          <span class="tag">CraftRequest</span>
+          <span class="tag">Chat</span>
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Server-validierter Gameplay-Fluss</h2>
+        <ol class="flow-list">
+          <li>Client wählt Hotbar-Slot und sendet BlockAction, BlockInteract oder CraftRequest.</li>
+          <li>Server prüft Zielblock, Reichweite, Inventar, Crafting-Rezept und Station-Regeln.</li>
+          <li>Server mutiert die Welt oder lehnt ab, ohne dass der Client die Wahrheit besitzt.</li>
+          <li>Akzeptierte Änderungen kommen als BlockUpdate, ChunkData oder InventorySnapshot zurück.</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="wiki-shell pixel">Adventura Wiki / Code Map</div></footer>
+  </body>
+</html>

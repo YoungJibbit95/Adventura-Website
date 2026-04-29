@@ -468,11 +468,80 @@ html {
 .doc-stat,
 .detail-row,
 .arg-row,
-.module-row {
+.module-row,
+.metric-card,
+.code-info-card,
+.code-map-row {
   background:
     linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025)),
     repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 18px);
   border: 1px solid rgba(255,255,255,0.09);
+}
+
+.metric-card {
+  min-height: 156px;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 4px;
+  background: linear-gradient(90deg, #10b981, #38bdf8, #fbbf24);
+  opacity: 0.85;
+}
+
+.code-info-card {
+  min-height: 100%;
+}
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag-cloud span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(2,6,8,0.32);
+  color: #cbd5e1;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  padding: 0.32rem 0.55rem;
+  word-break: break-word;
+}
+
+.code-map-row {
+  display: grid;
+  gap: 0.55rem;
+  text-decoration: none;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.code-map-row:hover {
+  transform: translateX(4px);
+  border-color: rgba(56, 189, 248, 0.35);
+  background:
+    linear-gradient(145deg, rgba(14, 165, 233, 0.1), rgba(255,255,255,0.025)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 18px);
+}
+
+.code-map-row code {
+  color: #a7f3d0;
+  font-size: 0.84rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.code-map-row span {
+  color: #cbd5e1;
+  line-height: 1.55;
 }
 
 .info-icon,

@@ -29,20 +29,36 @@ import {
   ScrollText,
   Keyboard,
   MousePointer2,
+  FileCode2,
+  Layers3,
+  Flame,
+  BookOpen,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const navItems = [
   { label: 'Spielprinzip', href: '#spielprinzip' },
+  { label: 'Code-Infos', href: '#code-infos' },
   { label: 'Architektur', href: '#architektur' },
   { label: 'Installation', href: '#installation' },
   { label: 'Wiki', href: '#wiki' },
 ];
 
 const gameAssetBase = 'https://raw.githubusercontent.com/YoungJibbit95/AdventureCraft/main/client/src/main/resources/assets/game';
+const gameRepo = 'https://github.com/YoungJibbit95/AdventureCraft';
+const codeHref = (path: string) => `${gameRepo}/blob/main/${path}`;
 const siteBase = import.meta.env.BASE_URL;
 const wikiIndexHref = `${siteBase}wiki/index.html`;
 const wikiHref = (page: string) => `${siteBase}wiki/${page}`;
+
+const currentMetrics = [
+  { value: '42', label: 'Block IDs', detail: 'Blocks.java: Terrain, Pflanzen, Ores, Licht und Campfire-States' },
+  { value: '69', label: 'Item Types', detail: 'Block-Items, Nahrung, Tools, Materialien und Decor' },
+  { value: '31', label: 'Rezepte', detail: 'Inventory-Crafting plus Campfire-Station mit Zeiten' },
+  { value: '12', label: 'Biome', detail: 'Meadow, Forests, Dunes, Peaks, Ruins, Lakeside und mehr' },
+  { value: '20', label: 'Server TPS', detail: 'Autoritativer Server-Takt fuer Multiplayer-Validierung' },
+  { value: '5', label: 'Module', detail: 'common, client, server, launcher und tools' },
+];
 
 const VoxelBlock = ({ color = 'bg-emerald-500', className = '' }) => (
   <div className={`mc-cube-wrapper inline-block ${className}`}>
@@ -131,10 +147,10 @@ function Navigation() {
 
 function HeroPanel() {
   const statusItems = [
-    { label: 'Runtime', value: 'Java 21 + LWJGL' },
-    { label: 'Server', value: 'Authoritative 20 TPS' },
-    { label: 'World', value: 'Seed-based Overworld' },
-    { label: 'Modes', value: 'Survival / Creative / Spectator' },
+    { label: 'Blocks', value: '42 registered' },
+    { label: 'Items', value: '69 types' },
+    { label: 'Recipes', value: '31 current' },
+    { label: 'Biomes', value: '12 overworld' },
   ];
 
   const commands = [
@@ -172,6 +188,25 @@ function HeroPanel() {
 
         <div className="rounded-lg border border-white/10 overflow-hidden">
           <img src={`${gameAssetBase}/generated_blocks_sheet.png`} alt="Adventura block and item art preview" className="pixel-art h-40 w-full object-cover opacity-80" />
+        </div>
+
+        <div className="minigame-hud rounded-lg p-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <span className="hud-pill font-pixel text-xs uppercase text-red-200"><Heart className="w-4 h-4" /> Health 20</span>
+            <span className="hud-pill font-pixel text-xs uppercase text-amber-200"><Sparkles className="w-4 h-4" /> Hunger 20</span>
+            <span className="hud-pill font-pixel text-xs uppercase text-sky-200"><Gauge className="w-4 h-4" /> Stamina</span>
+          </div>
+          <div className="grid grid-cols-7 gap-2">
+            {['1', '2', '3', '4', '5', '6', '7'].map((slot, index) => (
+              <div key={slot} className={`hotbar-slot ${index === 1 ? 'hotbar-slot-active' : ''}`}>
+                <span className="hotbar-number">{slot}</span>
+                <span className="hotbar-icon">
+                  <VoxelBlock color={index % 3 === 0 ? 'bg-emerald-500' : index % 3 === 1 ? 'bg-amber-500' : 'bg-sky-500'} className="scale-[0.55]" />
+                </span>
+                {index > 2 && <span className="hotbar-count">{index + 2}</span>}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -357,6 +392,164 @@ function GameplaySection() {
   );
 }
 
+function CodeSnapshotSection() {
+  const blockGroups = [
+    {
+      title: 'Terrain & Rohstoffe',
+      desc: 'Die Weltbasis besteht aus klassischen Voxel-Materialien plus neuen Sammelquellen.',
+      tags: ['stone', 'dirt', 'grass_block', 'water', 'sand', 'clay', 'gravel', 'snow', 'ice', 'coal_ore', 'iron_ore', 'copper_ore'],
+    },
+    {
+      title: 'Pflanzen & Harvest',
+      desc: 'Viele Cutout-Blöcke droppen direkt Ressourcen oder sind per Interact erntbar.',
+      tags: ['wild_grass', 'sun_bloom', 'red_mushroom', 'berry_bush', 'herb_planter', 'mushroom_cluster', 'clay_deposit', 'small_stone'],
+    },
+    {
+      title: 'Cozy Basebuilding',
+      desc: 'Der aktuelle Style geht klar Richtung kleine Camps, Deko und lesbare Survival-Basen.',
+      tags: ['skyroot_planks', 'flower_pot', 'lantern', 'woven_rug', 'small_table', 'wooden_chair', 'storage_crate', 'garden_fence', 'mossy_path'],
+    },
+    {
+      title: 'Licht & Campfire',
+      desc: 'Torch, Lantern, Glow Crystal und aktive Campfires emittieren Lichtwerte.',
+      tags: ['torch:14', 'lantern:13', 'glow_crystal_node:10', 'campfire_active:14', 'campfire_burned_out'],
+    },
+  ];
+
+  const systems = [
+    {
+      icon: <Heart className="w-6 h-6 text-red-300" />,
+      title: 'Survival Status',
+      desc: 'Health, Hunger, Stamina, Armor, Breath, Food-Regeneration, Fall Damage und Wasserbewegung sind bereits im Loop.',
+    },
+    {
+      icon: <Backpack className="w-6 h-6 text-amber-300" />,
+      title: 'Inventory & Hotbar',
+      desc: 'Stacks, Starter-Items, 1-9 Hotbar, Item-Sprites, Platzierungsverbrauch und volle Inventory-Snapshots im Online-Spiel.',
+    },
+    {
+      icon: <Hammer className="w-6 h-6 text-sky-300" />,
+      title: 'Crafting Progression',
+      desc: 'Basic, Tools, Food, Decor und Building-Rezepte, dazu Campfire-Stationen mit Unlock-Naehe und Crafting-Zeit.',
+    },
+    {
+      icon: <Flame className="w-6 h-6 text-orange-300" />,
+      title: 'Campfire Rules',
+      desc: 'Campfires koennen befeuert werden, wechseln in aktive States, brennen aus und treiben Food- und Material-Rezepte.',
+    },
+  ];
+
+  const codeFiles = [
+    { path: 'common/src/main/java/dev/voxelgame/common/block/Blocks.java', note: 'Block-Registry, Drops, Render-Layer, Tool-Typen und Lichtwerte.' },
+    { path: 'common/src/main/java/dev/voxelgame/common/item/Items.java', note: 'Item-Registry mit Stackgroessen, Tool-Durability und Food-Werten.' },
+    { path: 'common/src/main/java/dev/voxelgame/common/item/CraftingRecipes.java', note: '31 Rezepte, Kategorien und Campfire-Station-Progression.' },
+    { path: 'common/src/main/java/dev/voxelgame/common/world/Biomes.java', note: '12 Biome mit Surface/Subsurface/Stone und Spawn-Dichten.' },
+    { path: 'server/src/main/java/dev/voxelgame/server/world/ServerWorld.java', note: 'Chunk-Generation, Block Updates, Drops und aktive Campfires auf Server-Seite.' },
+    { path: 'common/src/main/java/dev/voxelgame/common/net/PacketCodec.java', note: 'Handshake, Login, Chunk Data, Block Actions, Interact, Craft, Chat und Snapshots.' },
+  ];
+
+  const foods = ['apple 4/1', 'berries 3/0', 'wild_herbs 1/0', 'healing_snack 5/4', 'mushroom_stew 7/2', 'herb_soup 6/3'];
+  const tools = ['stone_knife 72', 'stone_sword 96', 'stone_pickaxe 132', 'stone_axe 156', 'copper_pickaxe 240', 'copper_axe 260'];
+
+  return (
+    <section id="code-infos" className="py-32 relative bg-voxel-bg border-y border-white/5 overflow-hidden">
+      <div className="absolute inset-0 arcade-grid opacity-70"></div>
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <SectionHeader eyebrow="Code-Infos" title="Aktueller Stand aus dem Game-Code" icon={<FileCode2 className="w-4 h-4" />}>
+          Diese Website spiegelt jetzt die wichtigsten Registries und Systeme aus dem Java-Projekt: Blöcke, Items, Rezepte, Biome, Survival-Loop, Server-Authority und die Dateien, in denen der aktuelle Stand gepflegt wird.
+        </SectionHeader>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+          {currentMetrics.map((metric) => (
+            <div key={metric.label} className="metric-card rounded-lg p-5">
+              <div className="flex items-end gap-3 mb-3">
+                <strong className="font-pixel text-4xl text-emerald-300 leading-none">{metric.value}</strong>
+                <span className="font-pixel text-sm uppercase text-white pb-1">{metric.label}</span>
+              </div>
+              <p className="text-slate-300 leading-relaxed">{metric.detail}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid lg:grid-cols-[1fr_0.9fr] gap-6 mb-6">
+          <div className="doc-panel rounded-lg p-6">
+            <h3 className="font-pixel text-2xl uppercase text-white flex items-center gap-3 mb-6">
+              <Layers3 className="w-7 h-7 text-emerald-300" /> Block- und Content-Gruppen
+            </h3>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {blockGroups.map((group) => (
+                <article key={group.title} className="code-info-card rounded-lg p-5">
+                  <h4 className="font-pixel text-lg uppercase text-white mb-3">{group.title}</h4>
+                  <p className="text-slate-300 leading-relaxed mb-4">{group.desc}</p>
+                  <div className="tag-cloud">
+                    {group.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="doc-panel rounded-lg p-6">
+            <h3 className="font-pixel text-2xl uppercase text-white flex items-center gap-3 mb-6">
+              <PackageOpen className="w-7 h-7 text-amber-300" /> Items & Progression
+            </h3>
+            <div className="space-y-4">
+              <div className="code-info-card rounded-lg p-5">
+                <h4 className="font-pixel text-lg uppercase text-white mb-3">Food-Werte</h4>
+                <p className="text-slate-400 mb-4">Format: Hunger / Regeneration</p>
+                <div className="tag-cloud">
+                  {foods.map((food) => <span key={food}>{food}</span>)}
+                </div>
+              </div>
+              <div className="code-info-card rounded-lg p-5">
+                <h4 className="font-pixel text-lg uppercase text-white mb-3">Tool-Durability</h4>
+                <p className="text-slate-400 mb-4">Stein- und Kupferwerkzeuge aus `Items.java`.</p>
+                <div className="tag-cloud">
+                  {tools.map((tool) => <span key={tool}>{tool}</span>)}
+                </div>
+              </div>
+              <div className="rounded-lg border border-amber-300/20 bg-amber-300/10 p-5">
+                <h4 className="font-pixel text-base uppercase text-amber-200 mb-3">Game Style</h4>
+                <p className="text-slate-300 leading-relaxed">
+                  Cozy Survival statt reines Tech-Demo-Gefühl: Sammeln, kleine Camps, Lichtquellen, Pilze, Kräuter, Beeren, Teppiche, Tische, Stühle und Pfade sind schon als spielbarer Stil angelegt.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-6">
+          <div className="grid sm:grid-cols-2 gap-4">
+            {systems.map((system) => (
+              <article key={system.title} className="info-card rounded-lg p-6">
+                <div className="info-icon mb-5">{system.icon}</div>
+                <h3 className="font-pixel text-lg text-white uppercase mb-4">{system.title}</h3>
+                <p className="text-slate-300 leading-relaxed">{system.desc}</p>
+              </article>
+            ))}
+          </div>
+
+          <div className="doc-panel rounded-lg p-6">
+            <h3 className="font-pixel text-2xl uppercase text-white flex items-center gap-3 mb-6">
+              <BookOpen className="w-7 h-7 text-sky-300" /> Code Map
+            </h3>
+            <div className="space-y-3">
+              {codeFiles.map((file) => (
+                <a key={file.path} href={codeHref(file.path)} target="_blank" rel="noreferrer" className="code-map-row rounded-lg p-4">
+                  <code>{file.path}</code>
+                  <span>{file.note}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ArchitectureSection() {
   const modules = [
     { name: 'common', desc: 'Registries, Blöcke, Items, Crafting, World-/Chunk-Daten, Packets, Worldgen, Lighting und Entity Snapshots.' },
@@ -527,6 +720,9 @@ function InstallationSection() {
 function WikiSection() {
   const pages = [
     { icon: <Gamepad2 className="w-6 h-6 text-emerald-300" />, title: 'Spielprinzip', href: wikiHref('gameplay.html'), desc: 'Core Loop, Weltinhalt, Survival-Systeme und aktueller Feature-Stand.' },
+    { icon: <Layers3 className="w-6 h-6 text-lime-300" />, title: 'Content', href: wikiHref('content.html'), desc: 'Blöcke, Items, Biome, Rezepte, Food-Werte, Tools und Lichtquellen aus den Registries.' },
+    { icon: <BookOpen className="w-6 h-6 text-amber-300" />, title: 'Systeme', href: wikiHref('systems.html'), desc: 'Survival-Werte, Crafting, Campfire-Regeln, Interaktionen, Rendering und Online-Validierung.' },
+    { icon: <FileCode2 className="w-6 h-6 text-cyan-300" />, title: 'Code Map', href: wikiHref('code-map.html'), desc: 'Die wichtigsten Java-Dateien, Module und Datenflüsse als technische Orientierung.' },
     { icon: <Cpu className="w-6 h-6 text-sky-300" />, title: 'Architektur', href: wikiHref('architecture.html'), desc: 'Module, Runtime Shape, Tick Model, Networking, Rendering und Streaming.' },
     { icon: <Rocket className="w-6 h-6 text-amber-300" />, title: 'Installation', href: wikiHref('installation.html'), desc: 'Voraussetzungen, Gradle-Kommandos, Client Args und Troubleshooting.' },
     { icon: <Keyboard className="w-6 h-6 text-violet-300" />, title: 'Controls & Commands', href: wikiHref('controls.html'), desc: 'Tasten, Chat-Kommandos, Debug-Overlays und Settings.' },
@@ -586,8 +782,9 @@ function Footer() {
             <VoxelBlock color="bg-slate-600" className="scale-[0.5]" />
             &copy; {new Date().getFullYear()} Adventura Prototype.
           </div>
-          <div className="flex gap-8">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-8">
             <a href="#spielprinzip" className="hover:text-emerald-400 transition-colors">Spielprinzip</a>
+            <a href="#code-infos" className="hover:text-emerald-400 transition-colors">Code</a>
             <a href="#architektur" className="hover:text-emerald-400 transition-colors">Architektur</a>
             <a href="#installation" className="hover:text-emerald-400 transition-colors">Installation</a>
           </div>
@@ -610,6 +807,7 @@ function App() {
       <Navigation />
       <Hero />
       <GameplaySection />
+      <CodeSnapshotSection />
       <ArchitectureSection />
       <InstallationSection />
       <WikiSection />

@@ -12,6 +12,9 @@
         <a class="brand" href="../">ADVENT<span>URA</span></a>
         <div class="nav-links">
           <a href="./gameplay.html">Spielprinzip</a>
+          <a href="./content.html">Content</a>
+          <a href="./systems.html">Systeme</a>
+          <a href="./code-map.html">Code Map</a>
           <a href="./architecture.html">Architektur</a>
           <a href="./installation.html">Installation</a>
           <a href="./controls.html">Controls</a>
@@ -25,9 +28,34 @@
         <h1>Adventura <span>Game Wiki</span></h1>
         <p class="lead">
           Dieses Wiki sammelt die langlebigen Informationen zum Spiel: Core Loop,
-          Architektur, Installation, Controls, Commands und später Blöcke, Items,
-          Rezepte, Biome, Strukturen und Server-Administration.
+          Architektur, Installation, Controls, Commands, Blöcke, Items, Rezepte,
+          Biome, Systeme und konkrete Codepfade im aktuellen Prototyp.
         </p>
+      </section>
+
+      <section class="section">
+        <div class="grid four">
+          <article class="card stat">
+            <strong>42</strong>
+            <span>Block IDs</span>
+            <p class="muted">Terrain, Pflanzen, Decor, Ores, Licht und Campfire-States.</p>
+          </article>
+          <article class="card stat">
+            <strong>69</strong>
+            <span>Item Types</span>
+            <p class="muted">Block-Items, Nahrung, Werkzeuge, Materialien und Basebuilding.</p>
+          </article>
+          <article class="card stat">
+            <strong>31</strong>
+            <span>Rezepte</span>
+            <p class="muted">Inventory-Crafting plus Campfire-Station mit Crafting-Zeiten.</p>
+          </article>
+          <article class="card stat">
+            <strong>12</strong>
+            <span>Biome</span>
+            <p class="muted">Von cozy meadows bis old ruins, frost peaks und mushroom groves.</p>
+          </article>
+        </div>
       </section>
 
       <section class="section">
@@ -35,6 +63,18 @@
           <a class="card" href="./gameplay.html">
             <h2>Spielprinzip</h2>
             <p class="muted">Core Loop, aktueller Inhalt, Survival-Systeme, Biome und UI-Stand.</p>
+          </a>
+          <a class="card" href="./content.html">
+            <h2>Content-Katalog</h2>
+            <p class="muted">Blockgruppen, Item-Familien, Food-Werte, Tools, Lichtquellen und Rezepte.</p>
+          </a>
+          <a class="card" href="./systems.html">
+            <h2>Game-Systeme</h2>
+            <p class="muted">Survival-Stats, Crafting, Campfire-Regeln, Interaktionen und Online-Validierung.</p>
+          </a>
+          <a class="card" href="./code-map.html">
+            <h2>Code Map</h2>
+            <p class="muted">Welche Dateien im Java-Projekt für Content, Runtime und Netzwerk wichtig sind.</p>
           </a>
           <a class="card" href="./architecture.html">
             <h2>Architektur</h2>
@@ -53,11 +93,12 @@
 
       <section class="section">
         <div class="callout">
-          <h2>Nächste Wiki-Seiten</h2>
+          <h2>Aktueller Fokus</h2>
           <p>
-            Sinnvolle nächste Ausbauten: Block-Liste, Item-Liste, Crafting-Rezepte,
-            Biome & Strukturen, Entity-Katalog, Asset-Pipeline, Server-Konfiguration
-            und Changelog.
+            Die Seite beschreibt bewusst den Stand aus dem vorhandenen Code: Java 21,
+            LWJGL-Client, serverautoritatives Multiplayer-Fundament, seedbasierte
+            Overworld, Survival-Werte, Inventar, Crafting und ein wachsender cozy
+            Voxel-Content-Katalog.
           </p>
         </div>
       </section>

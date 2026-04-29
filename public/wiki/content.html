@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adventura Wiki - Content</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <nav class="wiki-nav">
+      <div class="wiki-nav-inner">
+        <a class="brand" href="../">ADVENT<span>URA</span></a>
+        <div class="nav-links">
+          <a href="./index.html">Wiki Start</a>
+          <a href="./gameplay.html">Spielprinzip</a>
+          <a href="./systems.html">Systeme</a>
+          <a href="./code-map.html">Code Map</a>
+          <a href="./architecture.html">Architektur</a>
+          <a href="./installation.html">Installation</a>
+          <a href="./controls.html">Controls</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="wiki-shell">
+      <section class="hero">
+        <span class="eyebrow">Content-Katalog</span>
+        <h1>Blöcke, Items, <span>Biome & Rezepte</span></h1>
+        <p class="lead">
+          Diese Seite fasst die aktuellen Registries aus dem Code zusammen:
+          42 Block-IDs, 69 Item-Typen, 31 Crafting-Rezepte und 12 Overworld-Biome.
+        </p>
+      </section>
+
+      <section class="section grid four">
+        <article class="card stat">
+          <strong>42</strong>
+          <span>Blocks</span>
+          <p class="muted">IDs 0 bis 41 inklusive Air, Water und Campfire-States.</p>
+        </article>
+        <article class="card stat">
+          <strong>69</strong>
+          <span>Items</span>
+          <p class="muted">Block-Items, Materialien, Food, Tools und Decor.</p>
+        </article>
+        <article class="card stat">
+          <strong>31</strong>
+          <span>Recipes</span>
+          <p class="muted">Basic, Tools, Food, Decor und Building.</p>
+        </article>
+        <article class="card stat">
+          <strong>12</strong>
+          <span>Biomes</span>
+          <p class="muted">Seedbasierte Overworld-Varianten mit eigenen Dichten.</p>
+        </article>
+      </section>
+
+      <section class="section">
+        <h2>Block-Gruppen</h2>
+        <div class="grid two">
+          <article class="card">
+            <h3>Terrain & Rohstoffe</h3>
+            <div class="pill-grid">
+              <span>stone</span><span>dirt</span><span>grass_block</span><span>water</span><span>sand</span><span>clay</span><span>gravel</span><span>snow</span><span>ice</span><span>coal_ore</span><span>iron_ore</span><span>copper_ore</span>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Natur & Harvest</h3>
+            <div class="pill-grid">
+              <span>skyroot_log</span><span>pine_log</span><span>wild_grass</span><span>sun_bloom</span><span>red_mushroom</span><span>berry_bush</span><span>herb_planter</span><span>mushroom_cluster</span><span>small_stone</span><span>tree_stump</span><span>clay_deposit</span>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Basebuilding & Decor</h3>
+            <div class="pill-grid">
+              <span>skyroot_planks</span><span>flower_pot</span><span>woven_rug</span><span>small_table</span><span>wooden_chair</span><span>storage_crate</span><span>mossy_path</span><span>garden_fence</span><span>campfire</span>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Lichtquellen</h3>
+            <div class="pill-grid">
+              <span>torch 14</span><span>lantern 13</span><span>mushroom_cluster 1</span><span>glow_crystal_node 10</span><span>campfire_active 14</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Items & Werte</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Gruppe</th>
+                <th>Aktuelle Items</th>
+                <th>Gameplay-Rolle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Food</td>
+                <td><code>apple 4/1</code>, <code>berries 3/0</code>, <code>wild_herbs 1/0</code>, <code>healing_snack 5/4</code>, <code>mushroom_stew 7/2</code>, <code>herb_soup 6/3</code></td>
+                <td>Hunger und Regeneration, teils mit Campfire-Rezepten.</td>
+              </tr>
+              <tr>
+                <td>Tools</td>
+                <td><code>stone_knife 72</code>, <code>stone_sword 96</code>, <code>stone_pickaxe 132</code>, <code>stone_axe 156</code>, <code>copper_pickaxe 240</code>, <code>copper_axe 260</code></td>
+                <td>Tool-Typen für Harvest, Abbaugeschwindigkeit und Durability.</td>
+              </tr>
+              <tr>
+                <td>Materialien</td>
+                <td><code>stick</code>, <code>twig</code>, <code>fiber</code>, <code>simple_rope</code>, <code>pebble</code>, <code>resin</code>, <code>clay_lump</code>, <code>charcoal</code>, <code>copper_ingot</code>, <code>glow_crystal</code></td>
+                <td>Crafting-Basis für Tools, Licht, Stationen und Deko.</td>
+              </tr>
+              <tr>
+                <td>Decor</td>
+                <td><code>flower_pot</code>, <code>lantern</code>, <code>woven_rug</code>, <code>small_table</code>, <code>wooden_chair</code>, <code>storage_crate</code>, <code>garden_fence</code>, <code>mossy_path</code></td>
+                <td>Der sichtbare cozy Game Style für Camps und kleine Basen.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Biome</h2>
+        <p>
+          <span class="tag">meadow</span>
+          <span class="tag">skyroot_forest</span>
+          <span class="tag">sun_dunes</span>
+          <span class="tag">highlands</span>
+          <span class="tag">frost_peaks</span>
+          <span class="tag">mire</span>
+          <span class="tag">cozy_meadow</span>
+          <span class="tag">pine_forest</span>
+          <span class="tag">mushroom_grove</span>
+          <span class="tag">lakeside</span>
+          <span class="tag">old_ruins</span>
+          <span class="tag">flower_fields</span>
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="wiki-shell pixel">Adventura Wiki / Content</div></footer>
+  </body>
+</html>

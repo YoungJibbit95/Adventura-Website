@@ -13,6 +13,9 @@
         <div class="nav-links">
           <a href="./index.html">Wiki Start</a>
           <a href="./gameplay.html">Spielprinzip</a>
+          <a href="./content.html">Content</a>
+          <a href="./systems.html">Systeme</a>
+          <a href="./code-map.html">Code Map</a>
           <a href="./architecture.html">Architektur</a>
           <a href="./controls.html">Controls</a>
         </div>
@@ -40,7 +43,8 @@
         </article>
         <article class="card">
           <h2>Schnellstart</h2>
-          <pre><code>./gradlew buildGame
+          <pre><code>cd Game
+./gradlew buildGame
 ./gradlew runLauncher
 ./gradlew runSingleplayer</code></pre>
         </article>
@@ -68,6 +72,22 @@
             <h3>Local Join</h3>
             <pre><code>./gradlew joinLocal</code></pre>
             <p class="muted">Verbindet einen Client mit dem lokalen Server.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Direkte Modul-Commands</h2>
+        <div class="grid two">
+          <article class="card">
+            <h3>Server mit Seed</h3>
+            <pre><code>./gradlew :server:run --args="--port 25565 --seed 1337"</code></pre>
+            <p class="muted">Nützlich für Multiplayer-Smoke-Tests und deterministische Weltstände.</p>
+          </article>
+          <article class="card">
+            <h3>Client Auto-Join</h3>
+            <pre><code>./gradlew :client:run --args="--auto-join --connect 127.0.0.1 --port 25565 --username Player --render-distance 8"</code></pre>
+            <p class="muted">Verbindet ohne Main Menu direkt zum lokalen oder entfernten Server.</p>
           </article>
         </div>
       </section>
