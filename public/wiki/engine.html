@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adventura Wiki - Engine</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./wiki.js" defer></script>
+  </head>
+  <body>
+    <nav class="wiki-nav">
+      <div class="wiki-nav-inner">
+        <a class="brand" href="../">ADVENT<span>URA</span></a>
+        <div class="nav-links">
+          <a href="./index.html">Wiki Start</a>
+          <a href="./gameplay.html">Spielprinzip</a>
+          <a href="./progression.html">Progression</a>
+          <a href="./content.html">Content</a>
+          <a href="./systems.html">Systeme</a>
+          <a href="./engine.html">Engine</a>
+          <a href="./code-map.html">Code Map</a>
+          <a href="./installation.html">Installation</a>
+          <a href="./controls.html">Controls</a>
+        </div>
+        <div class="wiki-search" role="search">
+          <input data-wiki-search type="search" placeholder="Wiki suchen..." aria-label="Wiki durchsuchen" />
+          <div class="wiki-search-results" data-wiki-results hidden></div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="wiki-shell">
+      <section class="hero">
+        <span class="eyebrow">Engine Deep Dive</span>
+        <h1>Worldgen, Rendering <span>& Server Flow</span></h1>
+        <p class="lead">
+          Die Engine ist als Java/LWJGL-Voxel-Fundament gebaut: deterministic
+          worldgen, Chunk-Datenmodell, Lighting, Dirty-Mesh-Rebuilds, Render-Layer,
+          Debug-Stats und ein serverautoritativer Netzwerkfluss.
+        </p>
+      </section>
+
+      <section class="section grid four">
+        <article class="card stat">
+          <strong>16</strong>
+          <span>Chunk Footprint</span>
+          <p class="muted">16x16 Blockfläche, vertikal in 16er Sections gedacht.</p>
+        </article>
+        <article class="card stat">
+          <strong>-64</strong>
+          <span>Min Y</span>
+          <p class="muted">Overworld-Dimension reicht bis Y 319 exklusiv.</p>
+        </article>
+        <article class="card stat">
+          <strong>15</strong>
+          <span>Light Max</span>
+          <p class="muted">Sky Light und Block Light werden getrennt gespeichert.</p>
+        </article>
+        <article class="card stat">
+          <strong>20</strong>
+          <span>Server TPS</span>
+          <p class="muted">Fester Server-Takt, variable Client-Render-Loop.</p>
+        </article>
+      </section>
+
+      <section class="section">
+        <h2>Worldgen Pipeline</h2>
+        <ol class="route-map">
+          <li>
+            <strong>Biome Sampling</strong>
+            <span>Temperature, Moisture, Ridge, Flower Noise und Ruin Noise wählen Biome wie Lakeside, Frost Peaks, Sun Dunes, Mushroom Grove oder Old Ruins.</span>
+          </li>
+          <li>
+            <strong>Terrain Height</strong>
+            <span>Continents, Erosion, Hills, Detail und Mountain Noise formen Höhe; Rivers blenden die Höhe Richtung Riverbed.</span>
+          </li>
+          <li>
+            <strong>Column Fill</strong>
+            <span>Surface, Subsurface, Stone/Ores, Caves, Water und Frozen Water werden pro Säule in den Chunk geschrieben.</span>
+          </li>
+          <li>
+            <strong>Decoration</strong>
+            <span>Trees, Pines, Plants, Mushrooms, Berries, Clay Deposits, Cacti, Boulders und Stumps kommen biome-abhängig dazu.</span>
+          </li>
+          <li>
+            <strong>Structures</strong>
+            <span>Campsites, Houses, Watchtowers, Desert Wells, Ruins und ein Compact Village werden über Chunk-/Biome-Rolls platziert.</span>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section grid two">
+        <article class="card">
+          <h2>Rendering Pipeline</h2>
+          <ul class="clean-list">
+            <li><strong>Dirty chunks:</strong> Weltänderungen markieren Chunks für Mesh-Rebuild.</li>
+            <li><strong>ChunkMesher:</strong> baut Visible-Face Meshes und Cross-Sprites für Cutout-Blöcke.</li>
+            <li><strong>Layer:</strong> Opaque Meshes und transparente Water Meshes werden getrennt gehalten.</li>
+            <li><strong>AO:</strong> Ambient Occlusion kann pro Mesh-Build aktiviert/deaktiviert werden.</li>
+            <li><strong>Culling:</strong> Render Distance und Frustum Intersection reduzieren Draw Calls.</li>
+            <li><strong>Debug:</strong> Overlay zeigt Draws, Tris, VRAM, Meshes, Entities, Culling und Chunk Borders.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>Lighting</h2>
+          <p>
+            Sky Light wird pro Chunk-Säule von oben nach unten neu berechnet.
+            Block Light sammelt Lichtquellen und propagiert per Queue durch nicht
+            opake Blöcke, aktuell über betroffene Nachbar-Chunks.
+          </p>
+          <div class="pill-grid">
+            <span>torch 14</span>
+            <span>lantern 13</span>
+            <span>glow crystal 10</span>
+            <span>campfire active 14</span>
+            <span>mushroom cluster 1</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="section">
+        <h2>Client/Server Datenfluss</h2>
+        <div class="engine-flow">
+          <div><strong>Launcher</strong><span>Seed, Render Distance, Preview Radius, Host, Port, Username</span></div>
+          <div><strong>Client</strong><span>Movement, BlockAction, BlockInteract, CraftRequest, Chat</span></div>
+          <div><strong>Server</strong><span>Validation, Chunk Generation, Inventory, Entities, Campfires</span></div>
+          <div><strong>Snapshots</strong><span>ChunkData, BlockUpdate, EntitySnapshots, InventorySnapshot, Chat</span></div>
+        </div>
+      </section>
+
+      <section class="section grid three">
+        <article class="card">
+          <h3>Performance Knobs</h3>
+          <p class="muted">Render Distance, World Preview, Mesh Budget, Fog, AO, Soft Shadows, Transparent Water, HUD, Chat, Debug und VSync sind im Settings-Menü steuerbar.</p>
+        </article>
+        <article class="card">
+          <h3>Asset Pipeline</h3>
+          <p class="muted">Block-Texturen können als einzelne PNGs abgelegt werden; Atlas und Sprite-Sheets liefern Fallbacks für Chunk Shader, HUD und Inventory.</p>
+        </article>
+        <article class="card">
+          <h3>Tests</h3>
+          <p class="muted">Tests existieren unter anderem für Worldgen, LightEngine, Inventory, CampfireRules, Renderer, Chunk Borders, Entities und Network Stats.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="wiki-shell pixel">Adventura Wiki / Engine</div></footer>
+  </body>
+</html>

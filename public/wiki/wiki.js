@@ -1,8 +1,10 @@
 const wikiEntries = [
   { title: 'Wiki Start', href: './index.html', text: 'Übersicht, Kennzahlen, Spielprinzip, Content, Systeme, Code Map, Installation und Controls.' },
   { title: 'Spielprinzip', href: './gameplay.html', text: 'Core Loop, Explore Gather Craft Survive, Survival HUD, Biome, Strukturen und Game Style.' },
+  { title: 'Progression Guide', href: './progression.html', text: 'Startpfad, frühe Ziele, Crafting-Meilensteine, Food, Campfire, Basebuilding und Survival lesen.' },
   { title: 'Content-Katalog', href: './content.html', text: '42 Blocks, 69 Items, 31 Recipes, 12 Biomes, Food-Werte, Tools, Lichtquellen und Decor.' },
   { title: 'Game-Systeme', href: './systems.html', text: 'Survival Status, Inventory, Hotbar, Crafting, Campfire Flow, Rendering und Server Authority.' },
+  { title: 'Engine Deep Dive', href: './engine.html', text: 'Worldgen Pipeline, Chunk Meshing, Lighting, Rendering, Performance, Assets und Server Datenfluss.' },
   { title: 'Code Map', href: './code-map.html', text: 'Module, wichtige Java-Dateien, Packet-Liste, Server-validierter Gameplay-Fluss.' },
   { title: 'Architektur', href: './architecture.html', text: 'Client Server, Module, Runtime Shape, Tick Model, Chunk Model, Rendering und Intent Flow.' },
   { title: 'Installation', href: './installation.html', text: 'JDK 21, Gradle, buildGame, runLauncher, runSingleplayer, runServer, joinLocal und Client Args.' },

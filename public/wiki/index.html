@@ -13,8 +13,10 @@
         <a class="brand" href="../">ADVENT<span>URA</span></a>
         <div class="nav-links">
           <a href="./gameplay.html">Spielprinzip</a>
+          <a href="./progression.html">Progression</a>
           <a href="./content.html">Content</a>
           <a href="./systems.html">Systeme</a>
+          <a href="./engine.html">Engine</a>
           <a href="./code-map.html">Code Map</a>
           <a href="./architecture.html">Architektur</a>
           <a href="./installation.html">Installation</a>
@@ -34,7 +36,8 @@
         <p class="lead">
           Dieses Wiki sammelt die langlebigen Informationen zum Spiel: Core Loop,
           Architektur, Installation, Controls, Commands, Blöcke, Items, Rezepte,
-          Biome, Systeme und konkrete Codepfade im aktuellen Prototyp.
+          Biome, Progression, Engine-Systeme und konkrete Codepfade im aktuellen
+          Prototyp.
         </p>
       </section>
 
@@ -64,32 +67,51 @@
       </section>
 
       <section class="section">
+        <h2>Empfohlener Lesepfad</h2>
+        <ol class="route-map compact">
+          <li><strong>Spiel verstehen</strong><span>Erst Spielprinzip und Progression lesen, um die aktuelle Loop zu greifen.</span></li>
+          <li><strong>Content nachschlagen</strong><span>Danach Blöcke, Items, Food-Werte, Rezepte und Biome im Content-Katalog prüfen.</span></li>
+          <li><strong>Engine verstehen</strong><span>Engine, Architektur und Code Map zeigen, wie Worldgen, Rendering und Server-Flow zusammenspielen.</span></li>
+          <li><strong>Starten & testen</strong><span>Installation und Controls helfen beim lokalen Smoke-Test.</span></li>
+        </ol>
+      </section>
+
+      <section class="section">
+        <h2>Wiki Bereiche</h2>
         <div class="grid two">
-          <a class="card" href="./gameplay.html">
+          <a class="card page-card" href="./gameplay.html">
             <h2>Spielprinzip</h2>
             <p class="muted">Core Loop, aktueller Inhalt, Survival-Systeme, Biome und UI-Stand.</p>
           </a>
-          <a class="card" href="./content.html">
+          <a class="card page-card accent" href="./progression.html">
+            <h2>Progression Guide</h2>
+            <p class="muted">Startpfad, frühe Ziele, Crafting-Meilensteine, Food, Campfire und erste Base.</p>
+          </a>
+          <a class="card page-card" href="./content.html">
             <h2>Content-Katalog</h2>
             <p class="muted">Blockgruppen, Item-Familien, Food-Werte, Tools, Lichtquellen und Rezepte.</p>
           </a>
-          <a class="card" href="./systems.html">
+          <a class="card page-card" href="./systems.html">
             <h2>Game-Systeme</h2>
             <p class="muted">Survival-Stats, Crafting, Campfire-Regeln, Interaktionen und Online-Validierung.</p>
           </a>
-          <a class="card" href="./code-map.html">
+          <a class="card page-card accent" href="./engine.html">
+            <h2>Engine Deep Dive</h2>
+            <p class="muted">Worldgen, Chunk Meshing, Lighting, Rendering, Performance, Assets und Server Flow.</p>
+          </a>
+          <a class="card page-card" href="./code-map.html">
             <h2>Code Map</h2>
             <p class="muted">Welche Dateien im Java-Projekt für Content, Runtime und Netzwerk wichtig sind.</p>
           </a>
-          <a class="card" href="./architecture.html">
+          <a class="card page-card" href="./architecture.html">
             <h2>Architektur</h2>
             <p class="muted">Module, Runtime Shape, Server Authority, Networking, Rendering und Streaming.</p>
           </a>
-          <a class="card" href="./installation.html">
+          <a class="card page-card" href="./installation.html">
             <h2>Installation</h2>
             <p class="muted">JDK, Gradle Wrapper, Startbefehle, Client-Argumente und Performance-Hinweise.</p>
           </a>
-          <a class="card" href="./controls.html">
+          <a class="card page-card" href="./controls.html">
             <h2>Controls</h2>
             <p class="muted">Tastenbelegung, Chat-Kommandos, Debug-Overlays und Settings.</p>
           </a>

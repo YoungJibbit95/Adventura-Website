@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adventura Wiki - Progression</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./wiki.js" defer></script>
+  </head>
+  <body>
+    <nav class="wiki-nav">
+      <div class="wiki-nav-inner">
+        <a class="brand" href="../">ADVENT<span>URA</span></a>
+        <div class="nav-links">
+          <a href="./index.html">Wiki Start</a>
+          <a href="./gameplay.html">Spielprinzip</a>
+          <a href="./progression.html">Progression</a>
+          <a href="./content.html">Content</a>
+          <a href="./systems.html">Systeme</a>
+          <a href="./engine.html">Engine</a>
+          <a href="./code-map.html">Code Map</a>
+          <a href="./installation.html">Installation</a>
+          <a href="./controls.html">Controls</a>
+        </div>
+        <div class="wiki-search" role="search">
+          <input data-wiki-search type="search" placeholder="Wiki suchen..." aria-label="Wiki durchsuchen" />
+          <div class="wiki-search-results" data-wiki-results hidden></div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="wiki-shell">
+      <section class="hero">
+        <span class="eyebrow">Gameplay Guide</span>
+        <h1>Vom Spawn zur <span>ersten Cozy Base</span></h1>
+        <p class="lead">
+          Diese Seite beschreibt den aktuellen spielbaren Ablauf: Ressourcen lesen,
+          Werkzeuge craften, Nahrung sichern, ein Campfire nutzen und aus den ersten
+          Blöcken eine kleine Basis bauen.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Empfohlener Startpfad</h2>
+        <ol class="route-map">
+          <li>
+            <strong>Umgebung scannen</strong>
+            <span>Biome, Wasser, Bäume, Beerenbüsche, Kräuter, kleine Steine und Pilze suchen. `F3` hilft beim Debuggen von Position und Biome.</span>
+          </li>
+          <li>
+            <strong>Starter-Ressourcen sammeln</strong>
+            <span>Twigs, Pebbles, Fiber, Wild Grass, Berries, Mushrooms, Clay Lump und Logs sind die frühen Progression-Bausteine.</span>
+          </li>
+          <li>
+            <strong>Basic Crafting öffnen</strong>
+            <span>Mit `E` Crafting/Inventar öffnen. Aus Logs werden Planks, aus Planks Sticks, aus Twig + Fiber Simple Rope.</span>
+          </li>
+          <li>
+            <strong>Werkzeugroute bauen</strong>
+            <span>Stone Knife für Pflanzen, Pickaxe für Stone/Ores, Axe für Logs/Deko, Shovel für Dirt/Sand/Clay.</span>
+          </li>
+          <li>
+            <strong>Campfire setzen</strong>
+            <span>Campfire craften, platzieren und befeuern. Danach werden Food, Charcoal, Clay und Copper-Rezepte interessant.</span>
+          </li>
+          <li>
+            <strong>Base lesbar machen</strong>
+            <span>Lantern, Storage Crate, Garden Fence, Mossy Path, Table, Chair, Rug, Flower Pot und Planter geben Orientierung und Stil.</span>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section grid two">
+        <article class="card">
+          <h2>Frühe Ziele</h2>
+          <div class="check-grid">
+            <span>Beeren oder Pilze finden</span>
+            <span>Fiber und Twigs sammeln</span>
+            <span>Stone Knife craften</span>
+            <span>Pickaxe oder Axe craften</span>
+            <span>Campfire bauen</span>
+            <span>Torch oder Lantern herstellen</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>Survival-Lesen</h2>
+          <p>
+            Health, Hunger, Stamina und Breath sind nicht nur HUD-Zahlen:
+            Hunger beeinflusst Regeneration, Sprinting liest Stamina, Wasser nutzt
+            eigene Bewegung/Breath und Fall Damage macht Terrain-Höhe relevant.
+          </p>
+          <div class="mini-hud">
+            <strong>Health 20 / Hunger 20 / Stamina / Breath</strong>
+            <div class="meter"><span style="width: 84%"></span></div>
+            <p class="muted">Creative und Spectator sind zum Testen da; Survival ist der Zielmodus für die Loop.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="section">
+        <h2>Crafting-Meilensteine</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Phase</th>
+                <th>Rezepte</th>
+                <th>Warum wichtig</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Basic</td>
+                <td><code>skyroot_planks</code>, <code>stick</code>, <code>simple_rope</code>, <code>torch</code></td>
+                <td>Startet fast jede weitere Crafting-Route und macht Dunkelheit/Erkundung lesbarer.</td>
+              </tr>
+              <tr>
+                <td>Tools</td>
+                <td><code>stone_knife</code>, <code>stone_pickaxe</code>, <code>stone_axe</code>, <code>stone_shovel</code>, <code>stone_sword</code></td>
+                <td>Ordnet Ressourcen nach Tool-Typ: Pflanzen, Stein/Ore, Holz, Erde/Sand/Clay.</td>
+              </tr>
+              <tr>
+                <td>Food</td>
+                <td><code>healing_snack</code>, <code>cooked_berries</code>, <code>roasted_mushroom</code>, <code>mushroom_stew</code>, <code>herb_soup</code></td>
+                <td>Verbindet Exploration mit Hunger, Regeneration und Campfire-Nutzung.</td>
+              </tr>
+              <tr>
+                <td>Campfire Tech</td>
+                <td><code>charcoal</code>, <code>clay_bowl</code>, <code>clay_pot</code>, <code>copper_ingot</code></td>
+                <td>Eröffnet bessere Foods, Decor und Kupferwerkzeuge.</td>
+              </tr>
+              <tr>
+                <td>Basebuilding</td>
+                <td><code>storage_crate</code>, <code>lantern</code>, <code>woven_rug</code>, <code>garden_fence</code>, <code>mossy_path</code></td>
+                <td>Gibt Basen Funktion, Orientierung und den cozy AdventureCraft-Stil.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section grid three">
+        <article class="card">
+          <h3>Harvestables</h3>
+          <p class="muted">Berry Bush, Herb Planter, Sun Bloom, Wild Grass, Red Mushroom, Mushroom Cluster und Clay Deposit sind frühe Interaktionsziele.</p>
+        </article>
+        <article class="card">
+          <h3>Gefahren</h3>
+          <p class="muted">Noch keine harte Combat-Loop, aber Fall Damage, Breath, Hunger, Dunkelheit und Orientierung sind schon relevante Survival-Faktoren.</p>
+        </article>
+        <article class="card">
+          <h3>Multiplayer</h3>
+          <p class="muted">Online werden Block-Actions, Interacts und Craft Requests nicht einfach geglaubt, sondern vom Server validiert.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="wiki-shell pixel">Adventura Wiki / Progression</div></footer>
+  </body>
+</html>

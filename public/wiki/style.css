@@ -283,6 +283,25 @@ h3 {
   border-color: rgba(52, 211, 153, 0.32);
 }
 
+.page-card {
+  min-height: 190px;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green), var(--blue));
+  opacity: 0.72;
+}
+
+.page-card.accent::after {
+  background: linear-gradient(90deg, var(--amber), var(--green), var(--blue));
+}
+
 .toc {
   padding: 20px;
 }
@@ -479,6 +498,114 @@ pre {
   font-size: 0.82rem;
 }
 
+.route-map {
+  counter-reset: route;
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.route-map.compact {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.route-map li {
+  counter-increment: route;
+  display: grid;
+  gap: 8px;
+  min-height: 144px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 18px);
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.route-map li::before {
+  content: "0" counter(route);
+  color: rgba(167,243,208,0.24);
+  font-family: var(--font-pixel);
+  font-size: 3rem;
+  line-height: 1;
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+}
+
+.route-map strong {
+  color: #fff;
+  font-family: var(--font-pixel);
+  text-transform: uppercase;
+  line-height: 1.2;
+  padding-right: 42px;
+}
+
+.route-map span {
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.check-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.check-grid span {
+  border: 1px solid rgba(52,211,153,0.18);
+  border-radius: 8px;
+  background: rgba(16,185,129,0.08);
+  color: #d1fae5;
+  padding: 10px 12px 10px 38px;
+  position: relative;
+}
+
+.check-grid span::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 17px;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--green);
+  box-shadow: 0 0 14px rgba(52,211,153,0.45);
+}
+
+.engine-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.engine-flow div {
+  min-height: 154px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(14,165,233,0.11), rgba(255,255,255,0.025)),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 14px);
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: 18px;
+}
+
+.engine-flow strong {
+  color: #fff;
+  font-family: var(--font-pixel);
+  text-transform: uppercase;
+}
+
+.engine-flow span {
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
 .mini-hud {
   display: grid;
   gap: 12px;
@@ -521,7 +648,9 @@ pre {
 @media (max-width: 800px) {
   .grid.two,
   .grid.three,
-  .grid.four {
+  .grid.four,
+  .route-map.compact,
+  .engine-flow {
     grid-template-columns: 1fr;
   }
 

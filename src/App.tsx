@@ -67,10 +67,12 @@ const currentMetrics = [
 
 const docsIndex = [
   { title: 'Core Loop', category: 'Gameplay', href: '#spielprinzip', text: 'Explore Gather Craft Survive mit Health Hunger Stamina Breath und blockbasiertem Progress.' },
+  { title: 'Progression Guide', category: 'Gameplay', href: wikiHref('progression.html'), text: 'Startpfad, Crafting-Meilensteine, Campfire, Food, Tools und erste Cozy Base.' },
   { title: 'Block Registry', category: 'Content', href: '#code-infos', text: '42 Block IDs: Terrain, Harvest, Decor, Light, Ores und Campfire States.' },
   { title: 'Items & Food', category: 'Content', href: wikiHref('content.html'), text: '69 Item Types, Food-Werte, Tools, Stackgrößen, Materialien und Basebuilding-Items.' },
   { title: 'Crafting Recipes', category: 'Content', href: wikiHref('content.html'), text: '31 Rezepte in Basic, Tools, Food, Decor und Building inklusive Campfire Station.' },
   { title: 'Server Authority', category: 'Technik', href: '#architektur', text: '20 TPS Server validiert Block Actions, Interact, Craft Requests, Inventory und World Edits.' },
+  { title: 'Engine Deep Dive', category: 'Technik', href: wikiHref('engine.html'), text: 'Worldgen Pipeline, Chunk Meshing, Lighting, Rendering, Performance und Server Flow.' },
   { title: 'Packet Flow', category: 'Technik', href: wikiHref('code-map.html'), text: 'Handshake, Login, ChunkData, BlockUpdate, EntitySnapshots, InventorySnapshot und Chat.' },
   { title: 'Local Start', category: 'Start', href: '#installation', text: './gradlew buildGame, runLauncher, runSingleplayer, runServer und joinLocal.' },
   { title: 'Controls & Commands', category: 'Start', href: wikiHref('controls.html'), text: 'WASD, E, O, F1, F3, F4, Chat, Slash Commands und Settings Toggles.' },
@@ -860,8 +862,10 @@ function InstallationSection() {
 function WikiSection() {
   const pages = [
     { icon: <Gamepad2 className="w-6 h-6 text-emerald-300" />, title: 'Spielprinzip', href: wikiHref('gameplay.html'), desc: 'Core Loop, Weltinhalt, Survival-Systeme und aktueller Feature-Stand.' },
+    { icon: <Compass className="w-6 h-6 text-green-300" />, title: 'Progression', href: wikiHref('progression.html'), desc: 'Startpfad, frühe Ziele, Crafting-Meilensteine, Campfire und erste Cozy Base.' },
     { icon: <Layers3 className="w-6 h-6 text-lime-300" />, title: 'Content', href: wikiHref('content.html'), desc: 'Blöcke, Items, Biome, Rezepte, Food-Werte, Tools und Lichtquellen aus den Registries.' },
     { icon: <BookOpen className="w-6 h-6 text-amber-300" />, title: 'Systeme', href: wikiHref('systems.html'), desc: 'Survival-Werte, Crafting, Campfire-Regeln, Interaktionen, Rendering und Online-Validierung.' },
+    { icon: <Cpu className="w-6 h-6 text-cyan-300" />, title: 'Engine', href: wikiHref('engine.html'), desc: 'Worldgen, Chunk Meshing, Lighting, Rendering, Performance, Assets und Server Flow.' },
     { icon: <FileCode2 className="w-6 h-6 text-cyan-300" />, title: 'Code Map', href: wikiHref('code-map.html'), desc: 'Die wichtigsten Java-Dateien, Module und Datenflüsse als technische Orientierung.' },
     { icon: <Cpu className="w-6 h-6 text-sky-300" />, title: 'Architektur', href: wikiHref('architecture.html'), desc: 'Module, Runtime Shape, Tick Model, Networking, Rendering und Streaming.' },
     { icon: <Rocket className="w-6 h-6 text-amber-300" />, title: 'Installation', href: wikiHref('installation.html'), desc: 'Voraussetzungen, Gradle-Kommandos, Client Args und Troubleshooting.' },
