@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adventura Wiki - Architektur</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <nav class="wiki-nav">
+      <div class="wiki-nav-inner">
+        <a class="brand" href="../">ADVENT<span>URA</span></a>
+        <div class="nav-links">
+          <a href="./index.html">Wiki Start</a>
+          <a href="./gameplay.html">Spielprinzip</a>
+          <a href="./installation.html">Installation</a>
+          <a href="./controls.html">Controls</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="wiki-shell">
+      <section class="hero">
+        <span class="eyebrow">Architektur</span>
+        <h1>Client/Server <span>von Anfang an</span></h1>
+        <p class="lead">
+          Der Server ist autoritativ. Er besitzt Weltgeneration, Chunk-Mutationen,
+          Entities, Inventarstatus und Simulationstakte. Clients senden Intents und
+          empfangen Chunks, Block-Updates, Entity-Snapshots und Inventar-Snapshots.
+        </p>
+      </section>
+
+      <section class="section grid two">
+        <article class="card">
+          <h2>Module</h2>
+          <ul class="clean-list">
+            <li><strong>common:</strong> Registries, World/Chunk Data, Packets, Generation, Lighting, Entities.</li>
+            <li><strong>server:</strong> Tick Loop, Netty Transport, Auth Hook, World Streaming.</li>
+            <li><strong>client:</strong> LWJGL Window, Rendering, UI, Hotbar, Chat, Settings.</li>
+            <li><strong>launcher:</strong> Swing Launcher für Singleplayer, Server und Join.</li>
+            <li><strong>tools:</strong> Daten- und Asset-Pack-Utilities.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>Runtime Shape</h2>
+          <p>
+            Launcher sammelt Startparameter. Client sendet Movement, Block Actions,
+            Craft Requests und Chat. Server validiert und antwortet mit Chunk Data,
+            Accepted Block Updates, Entity Snapshots, Chat Broadcasts und Inventory Snapshots.
+          </p>
+        </article>
+      </section>
+
+      <section class="section grid three">
+        <article class="card">
+          <h3>Tick Model</h3>
+          <p>Server: feste 20 TPS. Client: variable Render Loop, vorbereitet für Interpolation gegen Server-Snapshots.</p>
+        </article>
+        <article class="card">
+          <h3>Chunk Model</h3>
+          <p>16x16 Footprint, 16x16x16 Sections, Default Dimension Y -64 bis 319, Sky Light und Block Light als separate Werte.</p>
+        </article>
+        <article class="card">
+          <h3>Rendering</h3>
+          <p>LWJGL/OpenGL, Visible-face Meshing, Opaque/Transparent Meshes, Culling, Fog, AO, Soft Shading und animiertes Wasser.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="wiki-shell pixel">Adventura Wiki / Architektur</div></footer>
+  </body>
+</html>

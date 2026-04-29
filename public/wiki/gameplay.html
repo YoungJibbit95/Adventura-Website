@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adventura Wiki - Spielprinzip</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <nav class="wiki-nav">
+      <div class="wiki-nav-inner">
+        <a class="brand" href="../">ADVENT<span>URA</span></a>
+        <div class="nav-links">
+          <a href="./index.html">Wiki Start</a>
+          <a href="./architecture.html">Architektur</a>
+          <a href="./installation.html">Installation</a>
+          <a href="./controls.html">Controls</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="wiki-shell">
+      <section class="hero">
+        <span class="eyebrow">Spielprinzip</span>
+        <h1>Explore, Gather, <span>Craft, Survive</span></h1>
+        <p class="lead">
+          Adventura ist ein Java/LWJGL cozy voxel survival-adventure prototype.
+          Der aktuelle Fokus liegt auf einer spielbaren Grundlage: Welt erkunden,
+          Ressourcen sammeln, Crafting nutzen, Blöcke verändern und den Charakterstatus
+          über HUD und Inventar lesen.
+        </p>
+      </section>
+
+      <section class="section grid two">
+        <article class="card">
+          <h2>Core Loop</h2>
+          <ul class="clean-list">
+            <li><strong>Erkunden:</strong> Seed-basierte Overworld mit Biomen, Flüssen, Höhlen, Ores und Strukturen.</li>
+            <li><strong>Sammeln:</strong> Block-Drops, Nahrung, Pflanzen, Erze, Starter-Items und Inventar-Stacks.</li>
+            <li><strong>Craften:</strong> Crafting-Menü, Ressourcenverbrauch, Tool-Durability und Platzierungslogik.</li>
+            <li><strong>Überleben:</strong> Health, Hunger, Stamina, Armor, Breath, Fall Damage und Wasserbewegung.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>Game Modes</h2>
+          <p><span class="tag">Survival</span><span class="tag">Creative</span><span class="tag">Spectator</span></p>
+          <p class="muted">
+            Survival nutzt Collision, Gravity, Jumping, Sprinting, Wasserbewegung,
+            Food Regeneration und Fall Damage. Creative erlaubt Flying mit Collision.
+            Spectator ist No-clip Free Movement.
+          </p>
+        </article>
+      </section>
+
+      <section class="section">
+        <h2>Aktueller Weltinhalt</h2>
+        <div class="grid three">
+          <article class="card">
+            <h3>Biome</h3>
+            <p>Cozy Meadows, Flower Fields, Pine Forests, Mushroom Groves, Lakesides, Old Ruins, Dunes, Highlands, Frost Peaks und Mires.</p>
+          </article>
+          <article class="card">
+            <h3>Strukturen</h3>
+            <p>Campsites, Watchtowers, Houses, Desert Wells, Ruins und kompakte Villages mit Market Stall.</p>
+          </article>
+          <article class="card">
+            <h3>Entities</h3>
+            <p>Ambient Entities wie cozy sheep, bunnies, snails, fireflies und little boars sind als Weltbelebung vorgesehen.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="wiki-shell pixel">Adventura Wiki / Spielprinzip</div></footer>
+  </body>
+</html>

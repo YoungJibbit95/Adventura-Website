@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adventura Wiki - Installation</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <nav class="wiki-nav">
+      <div class="wiki-nav-inner">
+        <a class="brand" href="../">ADVENT<span>URA</span></a>
+        <div class="nav-links">
+          <a href="./index.html">Wiki Start</a>
+          <a href="./gameplay.html">Spielprinzip</a>
+          <a href="./architecture.html">Architektur</a>
+          <a href="./controls.html">Controls</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="wiki-shell">
+      <section class="hero">
+        <span class="eyebrow">Installation</span>
+        <h1>Prototyp <span>lokal starten</span></h1>
+        <p class="lead">
+          Adventura nutzt JDK 21 und den Gradle Wrapper des Game-Projekts.
+          Die folgenden Befehle werden im `Game`-Verzeichnis ausgeführt.
+        </p>
+      </section>
+
+      <section class="section grid two">
+        <article class="card">
+          <h2>Voraussetzungen</h2>
+          <ul>
+            <li>JDK 21</li>
+            <li>Gradle Wrapper aus dem Repository</li>
+            <li>Auf macOS eventuell `-XstartOnFirstThread` für LWJGL</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h2>Schnellstart</h2>
+          <pre><code>./gradlew buildGame
+./gradlew runLauncher
+./gradlew runSingleplayer</code></pre>
+        </article>
+      </section>
+
+      <section class="section">
+        <h2>Startbefehle</h2>
+        <div class="grid two">
+          <article class="card">
+            <h3>Launcher</h3>
+            <pre><code>./gradlew runLauncher</code></pre>
+            <p class="muted">Öffnet die Swing-Oberfläche mit Seed, Render Distance, Preview Radius, Host, Port und Username.</p>
+          </article>
+          <article class="card">
+            <h3>Singleplayer</h3>
+            <pre><code>./gradlew runSingleplayer</code></pre>
+            <p class="muted">Startet eine Offline-Welt mit lokaler Generation.</p>
+          </article>
+          <article class="card">
+            <h3>Server</h3>
+            <pre><code>./gradlew runServer</code></pre>
+            <p class="muted">Startet den autoritativen Server.</p>
+          </article>
+          <article class="card">
+            <h3>Local Join</h3>
+            <pre><code>./gradlew joinLocal</code></pre>
+            <p class="muted">Verbindet einen Client mit dem lokalen Server.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Client Argumente</h2>
+        <p>
+          <span class="tag">--seed N</span>
+          <span class="tag">--preview-radius N</span>
+          <span class="tag">--render-distance N</span>
+          <span class="tag">--connect HOST --port PORT</span>
+          <span class="tag">--auto-singleplayer</span>
+          <span class="tag">--auto-join</span>
+        </p>
+        <div class="callout">
+          <h3>Performance</h3>
+          <p>Bei Stottern während Chunk-Loading: Mesh Budget, Render Distance oder World Preview reduzieren. Optional Ambient AO, Shadows oder Water deaktivieren.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="wiki-shell pixel">Adventura Wiki / Installation</div></footer>
+  </body>
+</html>
