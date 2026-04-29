@@ -13,6 +13,21 @@ const wikiEntries = [
 
 const searchInput = document.querySelector('[data-wiki-search]');
 const searchResults = document.querySelector('[data-wiki-results]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+function markActiveNav() {
+  const current = window.location.pathname.split('/').pop() || 'index.html';
+  for (const link of navLinks) {
+    const target = link.getAttribute('href')?.replace('./', '') || '';
+    if (target === current) {
+      link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
+      window.requestAnimationFrame(() => {
+        link.scrollIntoView({ block: 'nearest', inline: 'center' });
+      });
+    }
+  }
+}
 
 function renderResults(query) {
   if (!searchInput || !searchResults) {
@@ -58,6 +73,8 @@ function renderResults(query) {
 }
 
 if (searchInput && searchResults) {
+  markActiveNav();
+
   searchInput.addEventListener('input', (event) => {
     renderResults(event.target.value);
   });
