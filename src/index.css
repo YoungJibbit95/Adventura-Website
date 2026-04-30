@@ -182,6 +182,30 @@ html {
   image-rendering: pixelated;
 }
 
+.hero-art-frame {
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.12);
+  background:
+    linear-gradient(145deg, rgba(3, 10, 12, 0.82), rgba(12, 21, 18, 0.92)),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 4px, transparent 4px 8px);
+}
+
+.hero-art-caption {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  background: rgba(2, 6, 8, 0.74);
+  backdrop-filter: blur(12px);
+  padding: 0.65rem 0.8rem;
+}
+
 .game-sky {
   background:
     linear-gradient(180deg, rgba(14, 35, 50, 0.95) 0%, rgba(8, 16, 24, 0.88) 48%, rgba(7, 12, 12, 0.96) 100%),
@@ -288,6 +312,121 @@ html {
 .sprite-card img,
 .asset-tile img {
   filter: saturate(1.08) contrast(1.08);
+}
+
+.overview-note,
+.overview-card,
+.progress-route,
+.route-step,
+.asset-card,
+.asset-hero {
+  background:
+    linear-gradient(145deg, rgba(15, 23, 42, 0.72), rgba(5, 11, 18, 0.9)),
+    radial-gradient(circle at top left, rgba(16,185,129,0.08), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(251,191,36,0.06), transparent 36%);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.overview-card,
+.route-step,
+.asset-card {
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.overview-card:hover,
+.route-step:hover,
+.asset-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(52, 211, 153, 0.3);
+}
+
+.mini-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.mini-tag-list span {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.055);
+  color: #d1fae5;
+  font-family: var(--font-pixel);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  padding: 0.25rem 0.45rem;
+}
+
+.route-step {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.route-step::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, #10b981, #38bdf8, #fbbf24);
+  opacity: 0.78;
+}
+
+.route-step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(52,211,153,0.28);
+  background: rgba(16,185,129,0.12);
+  color: #a7f3d0;
+  font-family: var(--font-pixel);
+  font-size: 0.82rem;
+}
+
+.asset-hero {
+  min-height: 320px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  align-items: stretch;
+}
+
+.asset-hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.asset-hero img {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.9;
+}
+
+.asset-image-wrap {
+  height: 190px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(2,6,8,0.12), rgba(2,6,8,0.64)),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 4px, transparent 4px 8px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.asset-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.92;
 }
 
 .code-chip {
@@ -739,6 +878,14 @@ html {
     transform: rotate(90deg);
     justify-self: center;
   }
+
+  .asset-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .asset-hero img {
+    min-height: 260px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -752,11 +899,23 @@ html {
   }
 
   .hotbar-slot {
-    min-height: 42px;
+    min-height: 36px;
   }
 
   .hotbar-number,
   .hotbar-count {
     font-size: 0.56rem;
+  }
+
+  .hero-art-caption {
+    position: static;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-radius: 0;
+  }
+
+  .asset-image-wrap {
+    height: 150px;
   }
 }

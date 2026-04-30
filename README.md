@@ -31,6 +31,11 @@ npm run build
 The static wiki is available at `/wiki/index.html` and currently includes:
 
 - Spielprinzip
+- Progression Guide
+- Content-Katalog
+- Game-Systeme
+- Engine Deep Dive
+- Code Map
 - Architektur
 - Installation
 - Controls & Commands

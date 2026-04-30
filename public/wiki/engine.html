@@ -123,9 +123,9 @@
       <section class="section">
         <h2>Client/Server Datenfluss</h2>
         <div class="engine-flow">
-          <div><strong>Launcher</strong><span>Seed, Render Distance, Preview Radius, Host, Port, Username</span></div>
+          <div><strong>Electron Launcher</strong><span>Seed, Render Distance, Preview Radius, Host, Port, Username</span></div>
           <div><strong>Client</strong><span>Movement, BlockAction, BlockInteract, CraftRequest, Chat</span></div>
-          <div><strong>Server</strong><span>Validation, Chunk Generation, Inventory, Entities, Campfires</span></div>
+          <div><strong>Server</strong><span>Validation, Chunk Generation, Inventory, Entities, Comfort, Campfires</span></div>
           <div><strong>Snapshots</strong><span>ChunkData, BlockUpdate, EntitySnapshots, InventorySnapshot, Chat</span></div>
         </div>
       </section>
@@ -137,7 +137,7 @@
         </article>
         <article class="card">
           <h3>Asset Pipeline</h3>
-          <p class="muted">Block-Texturen können als einzelne PNGs abgelegt werden; Atlas und Sprite-Sheets liefern Fallbacks für Chunk Shader, HUD und Inventory.</p>
+          <p class="muted">Block-Texturen können als einzelne PNGs abgelegt werden; `blocks_tiles`, `tools_weapons`, `nature_food`, `ores_materials` und `ui_hud` liefern Fallbacks für Chunk Shader, HUD und Inventory.</p>
         </article>
         <article class="card">
           <h3>Tests</h3>

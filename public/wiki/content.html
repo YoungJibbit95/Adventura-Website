@@ -36,25 +36,25 @@
         <h1>Blöcke, Items, <span>Biome & Rezepte</span></h1>
         <p class="lead">
           Diese Seite fasst die aktuellen Registries aus dem Code zusammen:
-          42 Block-IDs, 69 Item-Typen, 31 Crafting-Rezepte und 12 Overworld-Biome.
+          49 Block-IDs, 94 Item-Typen, 50 Crafting-Rezepte und 12 Overworld-Biome.
         </p>
       </section>
 
       <section class="section grid four">
         <article class="card stat">
-          <strong>42</strong>
+          <strong>49</strong>
           <span>Blocks</span>
-          <p class="muted">IDs 0 bis 41 inklusive Air, Water und Campfire-States.</p>
+          <p class="muted">IDs 0 bis 48 inklusive Stations, Air, Water und Campfire-States.</p>
         </article>
         <article class="card stat">
-          <strong>69</strong>
+          <strong>94</strong>
           <span>Items</span>
-          <p class="muted">Block-Items, Materialien, Food, Tools und Decor.</p>
+          <p class="muted">Block-Items, Materialien, Food, Tools, Ruin-Items und Decor.</p>
         </article>
         <article class="card stat">
-          <strong>31</strong>
+          <strong>50</strong>
           <span>Recipes</span>
-          <p class="muted">Basic, Tools, Food, Decor und Building.</p>
+          <p class="muted">Basic, Tools, Food, Decor, Building und Adventure.</p>
         </article>
         <article class="card stat">
           <strong>12</strong>
@@ -81,13 +81,13 @@
           <article class="card">
             <h3>Basebuilding & Decor</h3>
             <div class="pill-grid">
-              <span>skyroot_planks</span><span>flower_pot</span><span>woven_rug</span><span>small_table</span><span>wooden_chair</span><span>storage_crate</span><span>mossy_path</span><span>garden_fence</span><span>campfire</span>
+              <span>skyroot_planks</span><span>flower_pot</span><span>woven_rug</span><span>small_table</span><span>wooden_chair</span><span>storage_crate</span><span>mossy_path</span><span>garden_fence</span><span>sleeping_mat</span><span>campfire</span><span>cooking_pot</span><span>workbench</span><span>forge</span>
             </div>
           </article>
           <article class="card">
             <h3>Lichtquellen</h3>
             <div class="pill-grid">
-              <span>torch 14</span><span>lantern 13</span><span>mushroom_cluster 1</span><span>glow_crystal_node 10</span><span>campfire_active 14</span>
+              <span>torch 14</span><span>lantern 13</span><span>mushroom_cluster 1</span><span>glow_crystal_node 10</span><span>campfire_active 14</span><span>ancient_lantern 15</span>
             </div>
           </article>
         </div>
@@ -107,18 +107,23 @@
             <tbody>
               <tr>
                 <td>Food</td>
-                <td><code>apple 4/1</code>, <code>berries 3/0</code>, <code>wild_herbs 1/0</code>, <code>healing_snack 5/4</code>, <code>mushroom_stew 7/2</code>, <code>herb_soup 6/3</code></td>
-                <td>Hunger und Regeneration, teils mit Campfire-Rezepten.</td>
+                <td><code>apple 4/1</code>, <code>berries 3/0</code>, <code>wild_herbs 1/0</code>, <code>healing_snack 5/4</code>, <code>cooked_berries 5/1</code>, <code>roasted_mushroom 4/1</code>, <code>mushroom_stew 7/2</code>, <code>herb_soup 6/3</code>, <code>berry_jam 8/2</code>, <code>calming_tea 3/4</code>, <code>hearty_stew 10/3</code>, <code>honey 3/2</code></td>
+                <td>Hunger und Regeneration, teils mit Campfire- oder Cooking-Pot-Rezepten.</td>
               </tr>
               <tr>
                 <td>Tools</td>
-                <td><code>stone_knife 72</code>, <code>stone_sword 96</code>, <code>stone_pickaxe 132</code>, <code>stone_axe 156</code>, <code>copper_pickaxe 240</code>, <code>copper_axe 260</code></td>
+                <td><code>stone_knife 72</code>, <code>stone_sword 96</code>, <code>stone_pickaxe 132</code>, <code>stone_shovel 132</code>, <code>stone_axe 156</code>, <code>copper_pickaxe 240</code>, <code>copper_axe 260</code>, <code>iron_pickaxe 410</code>, <code>iron_axe 420</code></td>
                 <td>Tool-Typen für Harvest, Abbaugeschwindigkeit und Durability.</td>
               </tr>
               <tr>
                 <td>Materialien</td>
-                <td><code>stick</code>, <code>twig</code>, <code>fiber</code>, <code>simple_rope</code>, <code>pebble</code>, <code>resin</code>, <code>clay_lump</code>, <code>charcoal</code>, <code>copper_ingot</code>, <code>glow_crystal</code></td>
+                <td><code>stick</code>, <code>twig</code>, <code>fiber</code>, <code>simple_rope</code>, <code>pebble</code>, <code>resin</code>, <code>bark_strip</code>, <code>reed_bundle</code>, <code>clay_lump</code>, <code>charcoal</code>, <code>copper_ingot</code>, <code>iron_ingot</code>, <code>glow_crystal</code>, <code>ancient_fragment</code></td>
                 <td>Crafting-Basis für Tools, Licht, Stationen und Deko.</td>
+              </tr>
+              <tr>
+                <td>Adventure</td>
+                <td><code>ancient_lantern</code>, <code>ruin_key</code>, <code>ruin_seal</code>, <code>lost_charm</code></td>
+                <td>Ruinen-Progression, Rare Loot und spät freigeschaltete Recipes.</td>
               </tr>
               <tr>
                 <td>Decor</td>

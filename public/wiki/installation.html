@@ -36,6 +36,7 @@
         <h1>Prototyp <span>lokal starten</span></h1>
         <p class="lead">
           Adventura nutzt JDK 21 und den Gradle Wrapper des Game-Projekts.
+          Für den Electron Launcher werden zusätzlich Node.js und npm benötigt.
           Die folgenden Befehle werden im `Game`-Verzeichnis ausgeführt.
         </p>
       </section>
@@ -46,12 +47,14 @@
           <ul>
             <li>JDK 21</li>
             <li>Gradle Wrapper aus dem Repository</li>
+            <li>Node.js/npm für den Electron Launcher</li>
             <li>Auf macOS eventuell `-XstartOnFirstThread` für LWJGL</li>
           </ul>
         </article>
         <article class="card">
           <h2>Schnellstart</h2>
           <pre><code>cd Game
+./gradlew setupLauncher
 ./gradlew buildGame
 ./gradlew runLauncher
 ./gradlew runSingleplayer</code></pre>
@@ -62,9 +65,14 @@
         <h2>Startbefehle</h2>
         <div class="grid two">
           <article class="card">
+            <h3>Launcher Setup</h3>
+            <pre><code>./gradlew setupLauncher</code></pre>
+            <p class="muted">Installiert die npm-Abhängigkeiten des Electron Launchers.</p>
+          </article>
+          <article class="card">
             <h3>Launcher</h3>
             <pre><code>./gradlew runLauncher</code></pre>
-            <p class="muted">Öffnet die Swing-Oberfläche mit Seed, Render Distance, Preview Radius, Host, Port und Username.</p>
+            <p class="muted">Öffnet den React/Electron Launcher mit Seed, Render Distance, Preview Radius, Host, Port und Username.</p>
           </article>
           <article class="card">
             <h3>Singleplayer</h3>
@@ -106,6 +114,7 @@
           <span class="tag">--seed N</span>
           <span class="tag">--preview-radius N</span>
           <span class="tag">--render-distance N</span>
+          <span class="tag">--username NAME</span>
           <span class="tag">--connect HOST --port PORT</span>
           <span class="tag">--auto-singleplayer</span>
           <span class="tag">--auto-join</span>

@@ -31,7 +31,6 @@ import {
   MousePointer2,
   FileCode2,
   Layers3,
-  Flame,
   BookOpen,
   Search,
   ListFilter,
@@ -41,40 +40,44 @@ import {
 import { useState, useEffect } from 'react';
 
 const navItems = [
-  { label: 'Suchen', href: '#docs-konsole' },
-  { label: 'Spielprinzip', href: '#spielprinzip' },
-  { label: 'Code-Infos', href: '#code-infos' },
+  { label: 'Überblick', href: '#ueberblick' },
+  { label: 'Spiel', href: '#spielprinzip' },
+  { label: 'Assets', href: '#game-assets' },
+  { label: 'Game-Code', href: '#code-infos' },
   { label: 'Architektur', href: '#architektur' },
   { label: 'Installation', href: '#installation' },
   { label: 'Wiki', href: '#wiki' },
 ];
 
-const gameAssetBase = 'https://raw.githubusercontent.com/YoungJibbit95/AdventureCraft/main/client/src/main/resources/assets/game';
-const gameRepo = 'https://github.com/YoungJibbit95/AdventureCraft';
-const codeHref = (path: string) => `${gameRepo}/blob/main/${path}`;
 const siteBase = import.meta.env.BASE_URL;
+const gameRepo = 'https://github.com/YoungJibbit95/Adventura';
+const gameAssetBase = 'https://raw.githubusercontent.com/YoungJibbit95/Adventura/main/client/src/main/resources/assets/game';
+const gameAssetHref = (file: string) => `${gameAssetBase}/${file}`;
+const codeHref = (path: string) => `${gameRepo}/blob/main/${path}`;
 const wikiIndexHref = `${siteBase}wiki/index.html`;
 const wikiHref = (page: string) => `${siteBase}wiki/${page}`;
 
 const currentMetrics = [
-  { value: '42', label: 'Block IDs', detail: 'Blocks.java: Terrain, Pflanzen, Ores, Licht und Campfire-States' },
-  { value: '69', label: 'Item Types', detail: 'Block-Items, Nahrung, Tools, Materialien und Decor' },
-  { value: '31', label: 'Rezepte', detail: 'Inventory-Crafting plus Campfire-Station mit Zeiten' },
-  { value: '12', label: 'Biome', detail: 'Meadow, Forests, Dunes, Peaks, Ruins, Lakeside und mehr' },
-  { value: '20', label: 'Server TPS', detail: 'Autoritativer Server-Takt fuer Multiplayer-Validierung' },
-  { value: '5', label: 'Module', detail: 'common, client, server, launcher und tools' },
+  { value: '49', label: 'Block IDs', detail: 'Terrain, Pflanzen, Stationen, Licht, Ores, Campfire-States und Forge' },
+  { value: '94', label: 'Item Types', detail: 'Block-Items, Food, Tools, Materialien, Ruin-Items und Decor' },
+  { value: '50', label: 'Rezepte', detail: 'Inventory, Campfire, Cooking Pot, Workbench und Forge' },
+  { value: '12', label: 'Biome', detail: 'Meadow, Forests, Dunes, Peaks, Mire, Lakeside, Old Ruins und mehr' },
+  { value: '6', label: 'Structures', detail: 'Campsite, Watchtower, House, Desert Well, Ruin und Compact Village' },
+  { value: '4', label: 'Loot Tables', detail: 'Ruin-, Rare-Ruin-, Campsite- und Village-Crates' },
 ];
 
 const docsIndex = [
-  { title: 'Core Loop', category: 'Gameplay', href: '#spielprinzip', text: 'Explore Gather Craft Survive mit Health Hunger Stamina Breath und blockbasiertem Progress.' },
-  { title: 'Progression Guide', category: 'Gameplay', href: wikiHref('progression.html'), text: 'Startpfad, Crafting-Meilensteine, Campfire, Food, Tools und erste Cozy Base.' },
-  { title: 'Block Registry', category: 'Content', href: '#code-infos', text: '42 Block IDs: Terrain, Harvest, Decor, Light, Ores und Campfire States.' },
-  { title: 'Items & Food', category: 'Content', href: wikiHref('content.html'), text: '69 Item Types, Food-Werte, Tools, Stackgrößen, Materialien und Basebuilding-Items.' },
-  { title: 'Crafting Recipes', category: 'Content', href: wikiHref('content.html'), text: '31 Rezepte in Basic, Tools, Food, Decor und Building inklusive Campfire Station.' },
+  { title: 'Orientierung', category: 'Start', href: '#ueberblick', text: 'Kurzer Überblick über Spiel-Loop, Progression, Technik, Assets und Schnellstart.' },
+  { title: 'Core Loop', category: 'Gameplay', href: '#spielprinzip', text: 'Explore Gather Craft Survive mit Health, Hunger, Stamina, Breath und Comfort.' },
+  { title: 'Progression Guide', category: 'Gameplay', href: wikiHref('progression.html'), text: 'Startpfad, Campfire, Cooking Pot, Workbench, Forge, Food, Tools und Ruinen.' },
+  { title: 'Game Assets', category: 'Content', href: '#game-assets', text: 'Sprite-Sheets aus dem Game-Ordner: Blocks, Tools, Food, Ores, HUD und Kreaturen.' },
+  { title: 'Block Registry', category: 'Content', href: '#code-infos', text: '49 Block IDs: Terrain, Harvest, Stations, Decor, Light, Ores und Campfire States.' },
+  { title: 'Items & Food', category: 'Content', href: wikiHref('content.html'), text: '94 Item Types, Food-Werte, Tool-Durability, Ruin-Items, Materialien und Decor.' },
+  { title: 'Crafting Recipes', category: 'Content', href: wikiHref('content.html'), text: '50 Rezepte in Basic, Tools, Food, Decor, Building und Adventure.' },
   { title: 'Server Authority', category: 'Technik', href: '#architektur', text: '20 TPS Server validiert Block Actions, Interact, Craft Requests, Inventory und World Edits.' },
-  { title: 'Engine Deep Dive', category: 'Technik', href: wikiHref('engine.html'), text: 'Worldgen Pipeline, Chunk Meshing, Lighting, Rendering, Performance und Server Flow.' },
+  { title: 'Engine Deep Dive', category: 'Technik', href: wikiHref('engine.html'), text: 'Worldgen, Ambient Entities, Chunk Meshing, Lighting, Rendering, Performance und Server Flow.' },
   { title: 'Packet Flow', category: 'Technik', href: wikiHref('code-map.html'), text: 'Handshake, Login, ChunkData, BlockUpdate, EntitySnapshots, InventorySnapshot und Chat.' },
-  { title: 'Local Start', category: 'Start', href: '#installation', text: './gradlew buildGame, runLauncher, runSingleplayer, runServer und joinLocal.' },
+  { title: 'Local Start', category: 'Start', href: '#installation', text: './gradlew setupLauncher, runLauncher, runSingleplayer, runServer und joinLocal.' },
   { title: 'Controls & Commands', category: 'Start', href: wikiHref('controls.html'), text: 'WASD, E, O, F1, F3, F4, Chat, Slash Commands und Settings Toggles.' },
 ];
 
@@ -137,7 +140,7 @@ function Navigation() {
         </div>
 
         <div className="flex items-center gap-6">
-          <a href="https://github.com/YoungJibbit95/AdventureCraft" target="_blank" rel="noreferrer" className="hidden sm:block text-slate-400 hover:text-white transition-colors" aria-label="Adventura auf GitHub">
+          <a href={gameRepo} target="_blank" rel="noreferrer" className="hidden sm:block text-slate-400 hover:text-white transition-colors" aria-label="Adventura auf GitHub">
             <Github className="w-5 h-5 drop-shadow glow-blue" />
           </a>
           <a href={wikiIndexHref} className="hidden md:flex relative group px-6 py-2.5 rounded-lg overflow-hidden">
@@ -181,17 +184,17 @@ function Navigation() {
 
 function HeroPanel() {
   const statusItems = [
-    { label: 'Blocks', value: '42 registered' },
-    { label: 'Items', value: '69 types' },
-    { label: 'Recipes', value: '31 current' },
+    { label: 'Blocks', value: '49 registered' },
+    { label: 'Items', value: '94 types' },
+    { label: 'Recipes', value: '50 current' },
     { label: 'Biomes', value: '12 overworld' },
   ];
 
   const commands = [
+    './gradlew setupLauncher',
     './gradlew buildGame',
     './gradlew runLauncher',
-    './gradlew runSingleplayer',
-    './gradlew runServer && ./gradlew joinLocal',
+    './gradlew runSingleplayer --args="--seed 4242"',
   ];
 
   return (
@@ -220,8 +223,12 @@ function HeroPanel() {
           ))}
         </div>
 
-        <div className="rounded-lg border border-white/10 overflow-hidden">
-          <img src={`${gameAssetBase}/generated_blocks_sheet.png`} alt="Adventura block and item art preview" className="pixel-art h-40 w-full object-cover opacity-80" />
+        <div className="hero-art-frame rounded-lg overflow-hidden">
+          <img src={gameAssetHref('blocks_tiles_sheet.png')} alt="Adventura block texture sheet preview" className="pixel-art h-44 w-full object-cover opacity-90" />
+          <div className="hero-art-caption">
+            <span className="font-pixel text-xs uppercase text-emerald-200">Game Assets</span>
+            <span className="text-slate-300">Fallback-Sheets aus dem Java-Client</span>
+          </div>
         </div>
 
         <div className="minigame-hud rounded-lg p-4">
@@ -229,9 +236,10 @@ function HeroPanel() {
             <span className="hud-pill font-pixel text-xs uppercase text-red-200"><Heart className="w-4 h-4" /> Health 20</span>
             <span className="hud-pill font-pixel text-xs uppercase text-amber-200"><Sparkles className="w-4 h-4" /> Hunger 20</span>
             <span className="hud-pill font-pixel text-xs uppercase text-sky-200"><Gauge className="w-4 h-4" /> Stamina</span>
+            <span className="hud-pill font-pixel text-xs uppercase text-lime-200"><House className="w-4 h-4" /> Comfort</span>
           </div>
-          <div className="grid grid-cols-7 gap-2">
-            {['1', '2', '3', '4', '5', '6', '7'].map((slot, index) => (
+          <div className="grid grid-cols-9 gap-2">
+            {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((slot, index) => (
               <div key={slot} className={`hotbar-slot ${index === 1 ? 'hotbar-slot-active' : ''}`}>
                 <span className="hotbar-number">{slot}</span>
                 <span className="hotbar-icon">
@@ -263,32 +271,32 @@ function Hero() {
         >
           <div className="inline-flex items-center gap-3 px-4 py-2 rounded-lg glass-panel border border-emerald-500/30 text-sm font-pixel text-emerald-300 mb-8 shadow-[0_0_30px_rgba(16,185,129,0.15)] relative overflow-hidden">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse glow-emerald block"></span>
-            <span className="relative z-10 uppercase">Game Info / Architecture / Installation</span>
+            <span className="relative z-10 uppercase">Aktueller Stand aus dem Game-Ordner</span>
           </div>
 
           <h1 className="font-pixel text-5xl md:text-7xl leading-[1.05] mb-8">
             <span className="block text-white glow-text-emerald mix-blend-screen opacity-95 pb-2">ADVENTURA</span>
             <span className="relative inline-block">
               <span className="absolute -inset-4 bg-emerald-500/15 blur-2xl rounded-lg"></span>
-              <span className="relative text-emerald-400">SURVIVAL WIKI</span>
+              <span className="relative text-emerald-400">GAME GUIDE</span>
             </span>
           </h1>
 
           <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl leading-relaxed font-sans font-light border-l-2 border-white/10 pl-6">
-            Zentrale Website für das Voxel-Survival-Projekt: was man im Spiel macht, wie die Client/Server-Architektur aufgebaut ist und wie man den aktuellen Prototyp lokal startet.
+            Die Startseite bündelt jetzt den echten Prototyp-Stand: 49 Blocks, 94 Items, 50 Recipes, Survival-Werte, Comfort, Stationen, Ruinen-Progression, Assets und den schnellsten Weg ins Spiel.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-5 relative z-20">
-            <a href="#spielprinzip" className="w-full sm:w-auto relative group overflow-hidden rounded-lg">
+            <a href="#ueberblick" className="w-full sm:w-auto relative group overflow-hidden rounded-lg">
               <div className="absolute inset-0 bg-emerald-500 transition-transform duration-300 group-hover:scale-105"></div>
               <div className="relative px-8 py-5 flex items-center justify-center gap-4 text-white font-pixel text-sm uppercase drop-shadow-md">
                 <Gamepad2 className="w-5 h-5" />
-                Spielprinzip
+                Überblick
               </div>
             </a>
-            <a href="#installation" className="w-full sm:w-auto px-8 py-5 rounded-lg glass-panel hover:bg-white/5 transition-colors text-white font-pixel text-sm uppercase flex items-center justify-center gap-3">
-              <Rocket className="w-4 h-4 text-emerald-400" />
-              Installation
+            <a href="#code-infos" className="w-full sm:w-auto px-8 py-5 rounded-lg glass-panel hover:bg-white/5 transition-colors text-white font-pixel text-sm uppercase flex items-center justify-center gap-3">
+              <FileCode2 className="w-4 h-4 text-emerald-400" />
+              Game-Code
             </a>
             <a href={wikiIndexHref} className="w-full sm:w-auto px-8 py-5 rounded-lg glass-panel hover:bg-white/5 transition-colors text-white font-pixel text-sm uppercase flex items-center justify-center gap-3">
               <ScrollText className="w-4 h-4 text-amber-300" />
@@ -304,6 +312,101 @@ function Hero() {
         >
           <HeroPanel />
         </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function OverviewSection() {
+  const pillars = [
+    {
+      icon: <Compass className="w-7 h-7 text-emerald-300" />,
+      title: 'Spielen',
+      text: 'Erkunden, sammeln, craften, kochen, bauen und über Nacht einen warmen sicheren Spot halten.',
+      tags: ['Health', 'Hunger', 'Stamina', 'Breath', 'Comfort'],
+    },
+    {
+      icon: <Hammer className="w-7 h-7 text-amber-300" />,
+      title: 'Progression',
+      text: 'Der Pfad läuft über Campfire, Cooking Pot, Workbench und Forge bis zu Iron Tools, Ruin Key und Ruin Seal.',
+      tags: ['Campfire', 'Cooking Pot', 'Workbench', 'Forge'],
+    },
+    {
+      icon: <Map className="w-7 h-7 text-sky-300" />,
+      title: 'Welt',
+      text: '12 Biome, 6 Structure-Typen, Loot-Crates und Ambient Entities machen die Overworld lesbarer.',
+      tags: ['Campsite', 'Village', 'Ruins', 'Fireflies'],
+    },
+    {
+      icon: <Cpu className="w-7 h-7 text-lime-300" />,
+      title: 'Technik',
+      text: 'Java 21, LWJGL-Client, Netty-Server, Electron Launcher und ein serverautoritativer 20-TPS-Loop.',
+      tags: ['LWJGL', 'Netty', 'Electron', '20 TPS'],
+    },
+  ];
+
+  const route = [
+    { step: '01', title: 'Spawn & Supplies', text: 'Campsite, Starter-Ressourcen, erste Drops und klare Interaction-Hints.' },
+    { step: '02', title: 'Tools & Licht', text: 'Stone Knife, Pickaxe, Axe, Torches, Resin Torches und Lanterns.' },
+    { step: '03', title: 'Food & Comfort', text: 'Campfire-Food, Cooking Pot, Sleeping Mat, Rugs und aktive Comfort-Regeln.' },
+    { step: '04', title: 'Ruins & Forge', text: 'Iron Tools, Ancient Lantern, Ruin Key, Ruin Seal und seltene Loot-Crates.' },
+  ];
+
+  return (
+    <section id="ueberblick" className="py-24 relative bg-voxel-bg border-y border-white/5 overflow-hidden">
+      <div className="absolute inset-0 arcade-grid opacity-55"></div>
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-8 items-start">
+          <SectionHeader eyebrow="Überblick" title="Schneller reinfinden" icon={<ListFilter className="w-4 h-4" />}>
+            Die Seite ist jetzt in klare Wege aufgeteilt: erst verstehen, was man spielt, dann Content und Assets ansehen, danach Architektur oder Installation öffnen.
+          </SectionHeader>
+
+          <div className="overview-note rounded-lg p-6">
+            <h3 className="font-pixel text-2xl uppercase text-white mb-4">Aus `../Game` ergänzt</h3>
+            <p className="text-slate-300 leading-relaxed mb-5">
+              Die alten Website-Zahlen wurden gegen die aktuellen Registries abgeglichen. Neu sichtbar sind unter anderem Workbench, Forge, Cooking Pot, Comfort, Loot Tables, Ambient Entities und die echten Client-Sprite-Sheets.
+            </p>
+            <div className="tag-cloud">
+              <span>49 Blocks</span>
+              <span>94 Items</span>
+              <span>50 Recipes</span>
+              <span>6 Structures</span>
+              <span>5 Game Sheets</span>
+              <span>Electron Launcher</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+          {pillars.map((pillar) => (
+            <article key={pillar.title} className="overview-card rounded-lg p-6">
+              <div className="info-icon mb-5">{pillar.icon}</div>
+              <h3 className="font-pixel text-xl uppercase text-white mb-4">{pillar.title}</h3>
+              <p className="text-slate-300 leading-relaxed mb-5">{pillar.text}</p>
+              <div className="mini-tag-list">
+                {pillar.tags.map((tag) => <span key={tag}>{tag}</span>)}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="progress-route rounded-lg p-5 md:p-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <h3 className="font-pixel text-2xl uppercase text-white">Aktueller Spielerpfad</h3>
+            <a href={wikiHref('progression.html')} className="font-pixel text-sm uppercase text-emerald-300 inline-flex items-center gap-2 hover:text-white transition-colors">
+              Progression im Wiki <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+          <div className="grid md:grid-cols-4 gap-4">
+            {route.map((item) => (
+              <article key={item.step} className="route-step rounded-lg p-5">
+                <span className="route-step-number">{item.step}</span>
+                <h4 className="font-pixel text-lg uppercase text-white mt-5 mb-3">{item.title}</h4>
+                <p className="text-slate-300 leading-relaxed">{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -421,27 +524,27 @@ function GameplaySection() {
     {
       icon: <Hammer className="w-7 h-7 text-sky-300" />,
       title: 'Craften & Bauen',
-      desc: 'Crafting, Hotbar, Item-Sprites und Tool-Durability sind vorbereitet, damit aus Ressourcen Werkzeuge und kleine Basen werden.',
+      desc: 'Inventory-Crafting und Stationen führen von ersten Werkzeugen über Cooking Pot und Workbench bis zu Forge und Ruinen-Items.',
     },
     {
       icon: <Heart className="w-7 h-7 text-red-300" />,
       title: 'Überleben',
-      desc: 'Health, Hunger, Stamina, Armor, Breath, Fall Damage, Wasserbewegung und Regeneration bilden die Grundlage für Survival-Regeln.',
+      desc: 'Health, Hunger, Stamina, Armor, Breath, Fall Damage, Wasserbewegung, Regeneration und Comfort bilden die Survival-Regeln.',
     },
   ];
 
   const worldItems = [
-    { icon: <TreePine className="w-5 h-5 text-emerald-300" />, label: 'Biome', value: 'Meadows, Flower Fields, Pine Forests, Mushroom Groves, Dunes, Highlands, Frost Peaks, Mires' },
-    { icon: <House className="w-5 h-5 text-lime-300" />, label: 'Strukturen', value: 'Campsites, Watchtowers, Häuser, Desert Wells, alte Ruinen, kompakte Dörfer mit Marktstand' },
-    { icon: <Pickaxe className="w-5 h-5 text-orange-300" />, label: 'Ressourcen', value: 'Stone, Dirt, Wood, Coal, Iron, Copper, Berries, Mushrooms, Herbs und weitere Cozy-Props' },
-    { icon: <Sparkles className="w-5 h-5 text-sky-300" />, label: 'Rendering', value: 'Transparentes Wasser, Fog, Vertex AO, Soft Directional Shading, animierte Wasserflächen' },
+    { icon: <TreePine className="w-5 h-5 text-emerald-300" />, label: 'Biome', value: 'Meadow, Skyroot Forest, Cozy Meadow, Flower Fields, Pine Forest, Mushroom Grove, Lakeside, Old Ruins, Sun Dunes, Highlands, Frost Peaks und Mire' },
+    { icon: <House className="w-5 h-5 text-lime-300" />, label: 'Strukturen', value: 'Campsite, Watchtower, Simple House, Desert Well, Small Ruin und Compact Village mit Market Stall' },
+    { icon: <Pickaxe className="w-5 h-5 text-orange-300" />, label: 'Ressourcen', value: 'Coal, Copper, Iron, Clay, Resin, Bark, Reeds, Glow Crystal, Ancient Fragments und klassische Starter-Drops' },
+    { icon: <Sparkles className="w-5 h-5 text-sky-300" />, label: 'Lebendige Welt', value: 'Ambient Entities, Item Drops, Firefly Swarms, Loot Crates und Spawn-Anker ergänzen die reine Blockwelt' },
   ];
 
   const controlItems = [
     { icon: <Keyboard className="w-5 h-5 text-emerald-300" />, keys: 'WASD / Space / Shift', label: 'Bewegen, springen, sprinten' },
     { icon: <MousePointer2 className="w-5 h-5 text-amber-300" />, keys: 'Mouse / Left / Right', label: 'Umschauen, abbauen, platzieren' },
     { icon: <Backpack className="w-5 h-5 text-sky-300" />, keys: 'E / 1-9 / O', label: 'Inventar, Hotbar, Settings' },
-    { icon: <MessageCircle className="w-5 h-5 text-violet-300" />, keys: 'T / / / F3 / F4', label: 'Chat, Commands, Debug, Gamemode' },
+    { icon: <MessageCircle className="w-5 h-5 text-violet-300" />, keys: 'T / / / F1 / F3 / F4', label: 'Chat, Commands, HUD, Debug, Gamemode' },
   ];
 
   return (
@@ -510,27 +613,92 @@ function GameplaySection() {
   );
 }
 
+function GameAssetsSection() {
+  const sheets = [
+    {
+      title: 'Blocks & Terrain',
+      file: 'blocks_tiles_sheet.png',
+      desc: 'Fallback-Atlas für Terrain, Holz, Pfade, Stationen und Block-Items.',
+    },
+    {
+      title: 'Nature & Food',
+      file: 'nature_food_sheet.png',
+      desc: 'Pflanzen, Beeren, Kräuter, Pilze, Fuel und Food-Progression.',
+    },
+    {
+      title: 'Tools & Weapons',
+      file: 'tools_weapons_sheet.png',
+      desc: 'Stone-, Copper- und Iron-Werkzeuge plus Held-Item-Icons.',
+    },
+    {
+      title: 'Ores & Materials',
+      file: 'ores_materials_sheet.png',
+      desc: 'Raw Copper, Raw Iron, Ingots, Glow Crystal und Ruin-Materialien.',
+    },
+    {
+      title: 'HUD & UI',
+      file: 'ui_hud_sheet.png',
+      desc: 'Hearts, Hunger, Menüflächen, HUD-Flair und ausgewählte Decor-Icons.',
+    },
+  ];
+
+  return (
+    <section id="game-assets" className="py-32 relative overflow-hidden cosmic-section">
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <SectionHeader eyebrow="Game-Assets" title="Mehr Bildsprache aus dem Spiel" icon={<Shapes className="w-4 h-4" />}>
+          Die Website nutzt jetzt lokale Assets aus dem Game-Ordner. Dadurch wirkt sie weniger abstrakt und zeigt schneller, wie Adventura als cozy Voxel-Prototyp aussieht.
+        </SectionHeader>
+
+        <div className="asset-hero rounded-lg overflow-hidden mb-6">
+          <div className="asset-hero-copy">
+            <span className="font-pixel text-sm uppercase text-emerald-200">Sprite-Sheets</span>
+            <h3 className="font-pixel text-3xl uppercase text-white mt-3 mb-4">Renderer-Fallbacks, HUD und Item-Icons</h3>
+            <p className="text-slate-300 leading-relaxed">
+              Der Java-Client kann einzelne PNGs laden, nutzt diese Sheets aber als robuste Fallbacks für Chunk-Shader, HUD, Inventory und Held-Items.
+            </p>
+          </div>
+          <img src={gameAssetHref('nature_food_sheet.png')} alt="Adventura nature and food sprite sheet" className="pixel-art" />
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {sheets.map((sheet) => (
+            <article key={sheet.file} className="asset-card rounded-lg overflow-hidden">
+              <div className="asset-image-wrap">
+                <img src={gameAssetHref(sheet.file)} alt={`${sheet.title} sprite sheet`} className="pixel-art" />
+              </div>
+              <div className="p-5">
+                <h3 className="font-pixel text-lg uppercase text-white mb-3">{sheet.title}</h3>
+                <p className="text-slate-300 leading-relaxed">{sheet.desc}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CodeSnapshotSection() {
   const blockGroups = [
     {
       title: 'Terrain & Rohstoffe',
-      desc: 'Die Weltbasis besteht aus klassischen Voxel-Materialien plus neuen Sammelquellen.',
-      tags: ['stone', 'dirt', 'grass_block', 'water', 'sand', 'clay', 'gravel', 'snow', 'ice', 'coal_ore', 'iron_ore', 'copper_ore'],
+      desc: 'Die Weltbasis besteht aus klassischen Voxel-Materialien, Ores und Tool-Level-Gates.',
+      tags: ['stone', 'dirt', 'grass_block', 'water', 'sand', 'clay', 'gravel', 'snow', 'ice', 'coal_ore', 'iron_ore L2', 'copper_ore L1'],
     },
     {
       title: 'Pflanzen & Harvest',
-      desc: 'Viele Cutout-Blöcke droppen direkt Ressourcen oder sind per Interact erntbar.',
-      tags: ['wild_grass', 'sun_bloom', 'red_mushroom', 'berry_bush', 'herb_planter', 'mushroom_cluster', 'clay_deposit', 'small_stone'],
+      desc: 'Viele Cutout-Blöcke droppen Ressourcen oder haben eigene Rechtsklick-Interaktionen.',
+      tags: ['wild_grass', 'sun_bloom', 'red_mushroom', 'berry_bush', 'herb_planter', 'reeds', 'twig_pile', 'tree_stump', 'clay_deposit', 'small_stone'],
     },
     {
-      title: 'Cozy Basebuilding',
-      desc: 'Der aktuelle Style geht klar Richtung kleine Camps, Deko und lesbare Survival-Basen.',
-      tags: ['skyroot_planks', 'flower_pot', 'lantern', 'woven_rug', 'small_table', 'wooden_chair', 'storage_crate', 'garden_fence', 'mossy_path'],
+      title: 'Stationen & Comfort',
+      desc: 'Basen sind nicht nur Deko: Comfort beeinflusst Hunger-Drain und Stamina-Regeneration.',
+      tags: ['campfire', 'campfire_active', 'cooking_pot', 'workbench', 'forge', 'sleeping_mat', 'storage_crate', 'woven_rug', 'small_table', 'wooden_chair'],
     },
     {
-      title: 'Licht & Campfire',
-      desc: 'Torch, Lantern, Glow Crystal und aktive Campfires emittieren Lichtwerte.',
-      tags: ['torch:14', 'lantern:13', 'glow_crystal_node:10', 'campfire_active:14', 'campfire_burned_out'],
+      title: 'Licht & Ruinen',
+      desc: 'Lichtquellen und seltene Ruinen-Items machen Nacht, Höhlen und Erkundung lesbarer.',
+      tags: ['torch:14', 'lantern:13', 'glow_crystal_node:10', 'campfire_active:14', 'ancient_lantern:15', 'ruin_key', 'ruin_seal'],
     },
   ];
 
@@ -538,43 +706,48 @@ function CodeSnapshotSection() {
     {
       icon: <Heart className="w-6 h-6 text-red-300" />,
       title: 'Survival Status',
-      desc: 'Health, Hunger, Stamina, Armor, Breath, Food-Regeneration, Fall Damage und Wasserbewegung sind bereits im Loop.',
+      desc: 'Health, Hunger, Stamina, Breath, Armor, Fall Damage, Starvation, Regeneration und Wasser-Breath laufen serverseitig.',
     },
     {
-      icon: <Backpack className="w-6 h-6 text-amber-300" />,
-      title: 'Inventory & Hotbar',
-      desc: 'Stacks, Starter-Items, 1-9 Hotbar, Item-Sprites, Platzierungsverbrauch und volle Inventory-Snapshots im Online-Spiel.',
+      icon: <House className="w-6 h-6 text-lime-300" />,
+      title: 'Comfort Rules',
+      desc: 'Campfire, Sleeping Mat, Lantern, Rug, Table, Chair und Storage erhöhen Comfort und verbessern Hunger-/Stamina-Werte.',
     },
     {
       icon: <Hammer className="w-6 h-6 text-sky-300" />,
-      title: 'Crafting Progression',
-      desc: 'Basic, Tools, Food, Decor und Building-Rezepte, dazu Campfire-Stationen mit Unlock-Naehe und Crafting-Zeit.',
+      title: 'Station Crafting',
+      desc: 'Campfire, Cooking Pot, Workbench und Forge sind echte Stationen mit Nähe, Validierung, Crafting-Zeit und Kategorien.',
     },
     {
-      icon: <Flame className="w-6 h-6 text-orange-300" />,
-      title: 'Campfire Rules',
-      desc: 'Campfires koennen befeuert werden, wechseln in aktive States, brennen aus und treiben Food- und Material-Rezepte.',
+      icon: <PackageOpen className="w-6 h-6 text-orange-300" />,
+      title: 'Loot & Entities',
+      desc: 'Ruin-, Campsite- und Village-Crates, Item-Drops, Ambient Entities und Firefly Swarms geben der Welt mehr Anlass zum Erkunden.',
     },
   ];
 
   const codeFiles = [
     { path: 'common/src/main/java/dev/voxelgame/common/block/Blocks.java', note: 'Block-Registry, Drops, Render-Layer, Tool-Typen und Lichtwerte.' },
     { path: 'common/src/main/java/dev/voxelgame/common/item/Items.java', note: 'Item-Registry mit Stackgroessen, Tool-Durability und Food-Werten.' },
-    { path: 'common/src/main/java/dev/voxelgame/common/item/CraftingRecipes.java', note: '31 Rezepte, Kategorien und Campfire-Station-Progression.' },
+    { path: 'common/src/main/java/dev/voxelgame/common/item/CraftingRecipes.java', note: '50 Rezepte, Kategorien, Stationen und Adventure-Progression.' },
     { path: 'common/src/main/java/dev/voxelgame/common/world/Biomes.java', note: '12 Biome mit Surface/Subsurface/Stone und Spawn-Dichten.' },
-    { path: 'server/src/main/java/dev/voxelgame/server/world/ServerWorld.java', note: 'Chunk-Generation, Block Updates, Drops und aktive Campfires auf Server-Seite.' },
+    { path: 'common/src/main/java/dev/voxelgame/common/world/structure/Structures.java', note: 'Campsite, Village, Ruins, House, Well und Watchtower als Templates.' },
+    { path: 'common/src/main/java/dev/voxelgame/common/loot/LootTables.java', note: 'Vier Loot Tables für Ruinen, Campsites und Village-Häuser.' },
+    { path: 'common/src/main/java/dev/voxelgame/common/gameplay/ComfortRules.java', note: 'Comfort-Werte, Scan-Radius, Hunger-Drain und Stamina-Regeneration.' },
+    { path: 'common/src/main/java/dev/voxelgame/common/entity/AmbientEntitySpawner.java', note: 'Biomeabhängige Ambient Entities plus feste Spawn-Anker.' },
+    { path: 'server/src/main/java/dev/voxelgame/server/world/ServerWorld.java', note: 'Chunk-Generation, Block Updates, Drops, Comfort und aktive Campfires auf Server-Seite.' },
     { path: 'common/src/main/java/dev/voxelgame/common/net/PacketCodec.java', note: 'Handshake, Login, Chunk Data, Block Actions, Interact, Craft, Chat und Snapshots.' },
   ];
 
-  const foods = ['apple 4/1', 'berries 3/0', 'wild_herbs 1/0', 'healing_snack 5/4', 'mushroom_stew 7/2', 'herb_soup 6/3'];
-  const tools = ['stone_knife 72', 'stone_sword 96', 'stone_pickaxe 132', 'stone_axe 156', 'copper_pickaxe 240', 'copper_axe 260'];
+  const foods = ['apple 4/1', 'berries 3/0', 'wild_herbs 1/0', 'healing_snack 5/4', 'cooked_berries 5/1', 'roasted_mushroom 4/1', 'mushroom_stew 7/2', 'herb_soup 6/3', 'berry_jam 8/2', 'calming_tea 3/4', 'hearty_stew 10/3', 'honey 3/2'];
+  const tools = ['stone_knife 72', 'stone_sword 96', 'stone_pickaxe 132', 'stone_shovel 132', 'stone_axe 156', 'copper_pickaxe 240', 'copper_axe 260', 'iron_pickaxe 410', 'iron_axe 420'];
+  const stations = ['campfire radius 4', 'cooking_pot radius 4', 'workbench radius 4', 'forge radius 4', 'fuel: 18-180s', 'comfort cap 25 early'];
 
   return (
     <section id="code-infos" className="py-32 relative bg-voxel-bg border-y border-white/5 overflow-hidden">
       <div className="absolute inset-0 arcade-grid opacity-70"></div>
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeader eyebrow="Code-Infos" title="Aktueller Stand aus dem Game-Code" icon={<FileCode2 className="w-4 h-4" />}>
-          Diese Website spiegelt jetzt die wichtigsten Registries und Systeme aus dem Java-Projekt: Blöcke, Items, Rezepte, Biome, Survival-Loop, Server-Authority und die Dateien, in denen der aktuelle Stand gepflegt wird.
+          Diese Website spiegelt jetzt die wichtigsten Registries und Systeme aus `../Game`: Blöcke, Items, Rezepte, Biome, Structures, Loot, Comfort, Ambient Entities, Server-Authority und die Dateien, in denen der aktuelle Stand gepflegt wird.
         </SectionHeader>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
@@ -623,15 +796,22 @@ function CodeSnapshotSection() {
               </div>
               <div className="code-info-card rounded-lg p-5">
                 <h4 className="font-pixel text-lg uppercase text-white mb-3">Tool-Durability</h4>
-                <p className="text-slate-400 mb-4">Stein- und Kupferwerkzeuge aus `Items.java`.</p>
+                <p className="text-slate-400 mb-4">Stein-, Kupfer- und Eisenwerkzeuge aus `Items.java`.</p>
                 <div className="tag-cloud">
                   {tools.map((tool) => <span key={tool}>{tool}</span>)}
+                </div>
+              </div>
+              <div className="code-info-card rounded-lg p-5">
+                <h4 className="font-pixel text-lg uppercase text-white mb-3">Stationen & Regeln</h4>
+                <p className="text-slate-400 mb-4">Station-Nähe, Fuel und Comfort aus den Gameplay-Rules.</p>
+                <div className="tag-cloud">
+                  {stations.map((station) => <span key={station}>{station}</span>)}
                 </div>
               </div>
               <div className="rounded-lg border border-amber-300/20 bg-amber-300/10 p-5">
                 <h4 className="font-pixel text-base uppercase text-amber-200 mb-3">Game Style</h4>
                 <p className="text-slate-300 leading-relaxed">
-                  Cozy Survival statt reines Tech-Demo-Gefühl: Sammeln, kleine Camps, Lichtquellen, Pilze, Kräuter, Beeren, Teppiche, Tische, Stühle und Pfade sind schon als spielbarer Stil angelegt.
+                  Cozy Survival statt reines Tech-Demo-Gefühl: Sammeln, kleine Camps, Lichtquellen, Pilze, Kräuter, Beeren, Teppiche, Tische, Stühle, Pfade, Cooking und Ruinen-Progression sind als spielbarer Stil angelegt.
                 </p>
               </div>
             </div>
@@ -673,8 +853,8 @@ function ArchitectureSection() {
     { name: 'common', desc: 'Registries, Blöcke, Items, Crafting, World-/Chunk-Daten, Packets, Worldgen, Lighting und Entity Snapshots.' },
     { name: 'server', desc: 'Autoritativer Tick Loop, Netty Transport, Auth Hook, World Streaming, Inventory Validation und akzeptierte World Edits.' },
     { name: 'client', desc: 'LWJGL Window, Renderer, Camera, HUD, Inventory, Chat, Settings, Chunk Meshes, Entity Rendering und Sprite-Pass.' },
-    { name: 'launcher', desc: 'Swing Entry Point für Singleplayer, lokalen Server und Multiplayer-Join mit Seed, Host, Port und Renderwerten.' },
-    { name: 'tools', desc: 'Utility-Modul für Daten- und Asset-Pack-Aufgaben.' },
+    { name: 'launcher-electron', desc: 'React/Electron Launcher für Singleplayer, Server-Join, lokalen Server, Seed, Host, Port und Renderwerte.' },
+    { name: 'tools', desc: 'Utility-Modul für Daten-, Asset- und Entwicklungsaufgaben.' },
   ];
 
   const architectureFacts = [
@@ -689,7 +869,7 @@ function ArchitectureSection() {
       <div className="absolute inset-0 arcade-grid opacity-70"></div>
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeader eyebrow="Architektur" title="Client/Server von Anfang an" icon={<Cpu className="w-4 h-4" />}>
-          Die Codebasis ist kein reiner Singleplayer-Prototyp. Sie trennt geteilte Datenmodelle, autoritative Serverlogik, Client-Rendering, Launcher und Tools in eigene Gradle-Module.
+          Die Codebasis ist kein reiner Singleplayer-Prototyp. Sie trennt geteilte Datenmodelle, autoritative Serverlogik, Client-Rendering, Tools und den Electron Launcher in klare Bereiche.
         </SectionHeader>
 
         <div className="doc-panel rounded-lg p-6 mb-8">
@@ -697,7 +877,7 @@ function ArchitectureSection() {
             <div className="flow-node">
               <span className="flow-icon"><Play className="w-6 h-6" /></span>
               <strong>Launcher</strong>
-              <small>Seed, Host, Port, Username</small>
+              <small>Electron, Seed, Host, Port</small>
             </div>
             <ArrowRight className="flow-arrow" />
             <div className="flow-node">
@@ -774,6 +954,12 @@ function CopyCommandButton({ command }) {
 function InstallationSection() {
   const commandCards = [
     {
+      icon: <PackageOpen className="w-6 h-6 text-lime-300" />,
+      title: 'Launcher Setup',
+      desc: 'Installiert die npm-Abhängigkeiten des React/Electron Launchers.',
+      command: './gradlew setupLauncher',
+    },
+    {
       icon: <Hammer className="w-6 h-6 text-emerald-300" />,
       title: 'Build',
       desc: 'Kompiliert alle Module und prüft den aktuellen Stand.',
@@ -782,7 +968,7 @@ function InstallationSection() {
     {
       icon: <Rocket className="w-6 h-6 text-amber-300" />,
       title: 'Launcher',
-      desc: 'Startet die Swing-Oberfläche mit Seed, Render Distance, Preview Radius, Host, Port und Username.',
+      desc: 'Startet den Electron Launcher mit Seed, Render Distance, Preview Radius, Host, Port und Username.',
       command: './gradlew runLauncher',
     },
     {
@@ -803,6 +989,7 @@ function InstallationSection() {
     { flag: '--seed N', desc: 'Deterministische Welt für Offline-Generation.' },
     { flag: '--preview-radius N', desc: 'Offline-Chunk-Generierungsradius um die Kamera.' },
     { flag: '--render-distance N', desc: 'Client-seitige Sicht-/Culling-Distanz in Chunks.' },
+    { flag: '--username NAME', desc: 'Spielername für lokalen oder entfernten Join.' },
     { flag: '--connect HOST --port PORT', desc: 'Serverziel für Join Server.' },
     { flag: '--auto-singleplayer', desc: 'Main Menu überspringen und direkt offline starten.' },
     { flag: '--auto-join', desc: 'Main Menu überspringen und direkt zum konfigurierten Server verbinden.' },
@@ -812,7 +999,7 @@ function InstallationSection() {
     <section id="installation" className="py-32 relative overflow-hidden cosmic-section">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeader eyebrow="Installation" title="Lokal starten" icon={<Rocket className="w-4 h-4" />}>
-          Für den aktuellen Prototyp brauchst du JDK 21 und den Gradle Wrapper im `Game`-Projekt. Die Website dokumentiert die wichtigsten Startwege, das Wiki sammelt die längeren Details.
+          Für den aktuellen Prototyp brauchst du JDK 21 und den Gradle Wrapper im `Game`-Projekt. Für den Electron Launcher kommen Node/npm dazu; die wichtigsten Startwege sind hier direkt kopierbar.
         </SectionHeader>
 
         <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-6">
@@ -862,13 +1049,13 @@ function InstallationSection() {
 function WikiSection() {
   const pages = [
     { icon: <Gamepad2 className="w-6 h-6 text-emerald-300" />, title: 'Spielprinzip', href: wikiHref('gameplay.html'), desc: 'Core Loop, Weltinhalt, Survival-Systeme und aktueller Feature-Stand.' },
-    { icon: <Compass className="w-6 h-6 text-green-300" />, title: 'Progression', href: wikiHref('progression.html'), desc: 'Startpfad, frühe Ziele, Crafting-Meilensteine, Campfire und erste Cozy Base.' },
-    { icon: <Layers3 className="w-6 h-6 text-lime-300" />, title: 'Content', href: wikiHref('content.html'), desc: 'Blöcke, Items, Biome, Rezepte, Food-Werte, Tools und Lichtquellen aus den Registries.' },
-    { icon: <BookOpen className="w-6 h-6 text-amber-300" />, title: 'Systeme', href: wikiHref('systems.html'), desc: 'Survival-Werte, Crafting, Campfire-Regeln, Interaktionen, Rendering und Online-Validierung.' },
-    { icon: <Cpu className="w-6 h-6 text-cyan-300" />, title: 'Engine', href: wikiHref('engine.html'), desc: 'Worldgen, Chunk Meshing, Lighting, Rendering, Performance, Assets und Server Flow.' },
+    { icon: <Compass className="w-6 h-6 text-green-300" />, title: 'Progression', href: wikiHref('progression.html'), desc: 'Startpfad, frühe Ziele, Stationen, Forge, Ruinen und erste Cozy Base.' },
+    { icon: <Layers3 className="w-6 h-6 text-lime-300" />, title: 'Content', href: wikiHref('content.html'), desc: '49 Blocks, 94 Items, 50 Recipes, 12 Biome, Food, Tools und Lichtquellen.' },
+    { icon: <BookOpen className="w-6 h-6 text-amber-300" />, title: 'Systeme', href: wikiHref('systems.html'), desc: 'Survival-Werte, Comfort, Stationen, Interaktionen, Rendering und Online-Validierung.' },
+    { icon: <Cpu className="w-6 h-6 text-cyan-300" />, title: 'Engine', href: wikiHref('engine.html'), desc: 'Worldgen, Chunk Meshing, Lighting, Entities, Assets, Performance und Server Flow.' },
     { icon: <FileCode2 className="w-6 h-6 text-cyan-300" />, title: 'Code Map', href: wikiHref('code-map.html'), desc: 'Die wichtigsten Java-Dateien, Module und Datenflüsse als technische Orientierung.' },
     { icon: <Cpu className="w-6 h-6 text-sky-300" />, title: 'Architektur', href: wikiHref('architecture.html'), desc: 'Module, Runtime Shape, Tick Model, Networking, Rendering und Streaming.' },
-    { icon: <Rocket className="w-6 h-6 text-amber-300" />, title: 'Installation', href: wikiHref('installation.html'), desc: 'Voraussetzungen, Gradle-Kommandos, Client Args und Troubleshooting.' },
+    { icon: <Rocket className="w-6 h-6 text-amber-300" />, title: 'Installation', href: wikiHref('installation.html'), desc: 'JDK, Gradle, Electron Launcher, Kommandos, Client Args und Troubleshooting.' },
     { icon: <Keyboard className="w-6 h-6 text-violet-300" />, title: 'Controls & Commands', href: wikiHref('controls.html'), desc: 'Tasten, Chat-Kommandos, Debug-Overlays und Settings.' },
   ];
 
@@ -915,7 +1102,7 @@ function Footer() {
             <a href={wikiIndexHref} className="px-6 py-4 rounded-lg bg-emerald-500 text-white font-pixel text-sm uppercase inline-flex items-center justify-center gap-3">
               <ScrollText className="w-4 h-4" /> Wiki öffnen
             </a>
-            <a href="https://github.com/YoungJibbit95/AdventureCraft" target="_blank" rel="noreferrer" className="px-6 py-4 rounded-lg border border-white/10 text-white font-pixel text-sm uppercase inline-flex items-center justify-center gap-3 hover:bg-white/5 transition-colors">
+            <a href={gameRepo} target="_blank" rel="noreferrer" className="px-6 py-4 rounded-lg border border-white/10 text-white font-pixel text-sm uppercase inline-flex items-center justify-center gap-3 hover:bg-white/5 transition-colors">
               <Github className="w-4 h-4" /> GitHub
             </a>
           </div>
@@ -950,8 +1137,10 @@ function App() {
     <div className="min-h-screen bg-voxel-bg text-slate-200 selection:bg-emerald-500/30 overflow-x-hidden">
       <Navigation />
       <Hero />
+      <OverviewSection />
       <DocsConsoleSection />
       <GameplaySection />
+      <GameAssetsSection />
       <CodeSnapshotSection />
       <ArchitectureSection />
       <InstallationSection />

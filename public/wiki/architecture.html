@@ -45,10 +45,10 @@
         <article class="card">
           <h2>Module</h2>
           <ul class="clean-list">
-            <li><strong>common:</strong> Registries, World/Chunk Data, Packets, Generation, Lighting, Entities.</li>
-            <li><strong>server:</strong> Tick Loop, Netty Transport, Auth Hook, World Streaming.</li>
+            <li><strong>common:</strong> Registries, World/Chunk Data, Packets, Generation, Lighting, Entities, Loot und Gameplay Rules.</li>
+            <li><strong>server:</strong> Tick Loop, Netty Transport, Auth Hook, World Streaming, Comfort und Inventory Validation.</li>
             <li><strong>client:</strong> LWJGL Window, Rendering, UI, Hotbar, Chat, Settings.</li>
-            <li><strong>launcher:</strong> Swing Launcher für Singleplayer, Server und Join.</li>
+            <li><strong>launcher-electron:</strong> React/Electron Launcher für Singleplayer, Server und Join.</li>
             <li><strong>tools:</strong> Daten- und Asset-Pack-Utilities.</li>
           </ul>
         </article>
@@ -56,7 +56,7 @@
         <article class="card">
           <h2>Runtime Shape</h2>
           <p>
-            Launcher sammelt Startparameter. Client sendet Movement, Block Actions,
+            Der Electron Launcher sammelt Startparameter. Client sendet Movement, Block Actions,
             Craft Requests und Chat. Server validiert und antwortet mit Chunk Data,
             Accepted Block Updates, Entity Snapshots, Chat Broadcasts und Inventory Snapshots.
           </p>
